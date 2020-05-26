@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MDRConfigTool",
-    "\\MDRConfigTool\\bin",
-    "\\MDRConfigTool\\bin\\Debug",
-    "\\MDRConfigTool\\bin\\Release"
+    "\\MDRConfigTool"
   ],
-  "SelectedNode": "\\MDRConfigTool\\Program.cs",
+  "SelectedNode": "\\MDRConfigTool\\MDRConfigTool.sln",
   "PreviewInSolutionExplorer": false
 }
