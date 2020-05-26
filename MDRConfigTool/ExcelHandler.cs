@@ -13,7 +13,7 @@ namespace MDRConfigTool
         private Excel.Application _app;
         private Excel.Workbooks _workbooks;
         private Excel.Workbook _workbook;
-        private Excel.Worksheet worksheet;
+        public Excel.Worksheet _worksheet { get; }
 
         //base contructor for the Excel file handler, in this scenario no file was selected, so a new worksheet is opened
         //As of MAy 25th, this contructor should never be called. This is here in case we want to give the option to a customer to fill out the worksheet
@@ -109,5 +109,6 @@ namespace MDRConfigTool
         {
 
         }
+        
     }//Class
 }//namespace
