@@ -8,5 +8,7 @@ namespace MDRConfigTool
 {
     class IOtreeItem
     {
+
+
     }
 }

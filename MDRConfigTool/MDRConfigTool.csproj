@@ -36,6 +36,9 @@
     <Reference Include="envdte100, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,7 +58,7 @@
     <Compile Include="FileContentDisplay.Designer.cs">
       <DependentUpon>FileContentDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileReader.cs" />
+    <Compile Include="ExcelHandler.cs" />
     <Compile Include="FileSelector.cs">
       <SubType>Form</SubType>
     </Compile>
