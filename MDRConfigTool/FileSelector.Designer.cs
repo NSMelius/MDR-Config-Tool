@@ -34,9 +34,17 @@
             this.pnlFileSelect = new System.Windows.Forms.Panel();
             this.pnlDataDisplay = new System.Windows.Forms.Panel();
             this.dgvListDisplay = new System.Windows.Forms.DataGridView();
+            this.pnlSolutionsettings = new System.Windows.Forms.Panel();
+            this.tbAmsNetId = new System.Windows.Forms.TextBox();
+            this.btnTableOK = new System.Windows.Forms.Button();
+            this.lbAmsNetId = new System.Windows.Forms.Label();
+            this.gbAmsSettings = new System.Windows.Forms.GroupBox();
+            this.btnOpenSolution = new System.Windows.Forms.Button();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
+            this.pnlSolutionsettings.SuspendLayout();
+            this.gbAmsSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbFilePath
@@ -79,10 +87,11 @@
             // 
             // pnlDataDisplay
             // 
+            this.pnlDataDisplay.Controls.Add(this.btnTableOK);
             this.pnlDataDisplay.Controls.Add(this.dgvListDisplay);
             this.pnlDataDisplay.Location = new System.Drawing.Point(12, 12);
             this.pnlDataDisplay.Name = "pnlDataDisplay";
-            this.pnlDataDisplay.Size = new System.Drawing.Size(603, 334);
+            this.pnlDataDisplay.Size = new System.Drawing.Size(603, 385);
             this.pnlDataDisplay.TabIndex = 4;
             this.pnlDataDisplay.Visible = false;
             // 
@@ -95,11 +104,69 @@
             this.dgvListDisplay.Size = new System.Drawing.Size(600, 325);
             this.dgvListDisplay.TabIndex = 0;
             // 
+            // pnlSolutionsettings
+            // 
+            this.pnlSolutionsettings.Controls.Add(this.btnOpenSolution);
+            this.pnlSolutionsettings.Controls.Add(this.gbAmsSettings);
+            this.pnlSolutionsettings.Location = new System.Drawing.Point(12, 11);
+            this.pnlSolutionsettings.Name = "pnlSolutionsettings";
+            this.pnlSolutionsettings.Size = new System.Drawing.Size(603, 386);
+            this.pnlSolutionsettings.TabIndex = 5;
+            // 
+            // tbAmsNetId
+            // 
+            this.tbAmsNetId.Location = new System.Drawing.Point(99, 38);
+            this.tbAmsNetId.Name = "tbAmsNetId";
+            this.tbAmsNetId.Size = new System.Drawing.Size(100, 20);
+            this.tbAmsNetId.TabIndex = 0;
+            this.tbAmsNetId.Text = "127.0.0.1";
+            // 
+            // btnTableOK
+            // 
+            this.btnTableOK.Location = new System.Drawing.Point(524, 352);
+            this.btnTableOK.Name = "btnTableOK";
+            this.btnTableOK.Size = new System.Drawing.Size(75, 23);
+            this.btnTableOK.TabIndex = 1;
+            this.btnTableOK.Text = "OK";
+            this.btnTableOK.UseVisualStyleBackColor = true;
+            this.btnTableOK.Click += new System.EventHandler(this.btnTableOK_Click);
+            // 
+            // lbAmsNetId
+            // 
+            this.lbAmsNetId.AutoSize = true;
+            this.lbAmsNetId.Location = new System.Drawing.Point(-3, 41);
+            this.lbAmsNetId.Name = "lbAmsNetId";
+            this.lbAmsNetId.Size = new System.Drawing.Size(96, 13);
+            this.lbAmsNetId.TabIndex = 1;
+            this.lbAmsNetId.Text = "Target Ams Net Id:";
+            // 
+            // gbAmsSettings
+            // 
+            this.gbAmsSettings.Controls.Add(this.lbAmsNetId);
+            this.gbAmsSettings.Controls.Add(this.tbAmsNetId);
+            this.gbAmsSettings.Location = new System.Drawing.Point(3, 6);
+            this.gbAmsSettings.Name = "gbAmsSettings";
+            this.gbAmsSettings.Size = new System.Drawing.Size(232, 100);
+            this.gbAmsSettings.TabIndex = 2;
+            this.gbAmsSettings.TabStop = false;
+            this.gbAmsSettings.Text = "Ams Settings";
+            // 
+            // btnOpenSolution
+            // 
+            this.btnOpenSolution.Location = new System.Drawing.Point(489, 307);
+            this.btnOpenSolution.Name = "btnOpenSolution";
+            this.btnOpenSolution.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenSolution.TabIndex = 3;
+            this.btnOpenSolution.Text = "Create";
+            this.btnOpenSolution.UseVisualStyleBackColor = true;
+            this.btnOpenSolution.Click += new System.EventHandler(this.btnOpenSolution_Click);
+            // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlSolutionsettings);
             this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlFileSelect);
             this.Name = "FileSelector";
@@ -108,6 +175,9 @@
             this.pnlFileSelect.PerformLayout();
             this.pnlDataDisplay.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).EndInit();
+            this.pnlSolutionsettings.ResumeLayout(false);
+            this.gbAmsSettings.ResumeLayout(false);
+            this.gbAmsSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -120,6 +190,12 @@
         private System.Windows.Forms.Panel pnlFileSelect;
         private System.Windows.Forms.Panel pnlDataDisplay;
         private System.Windows.Forms.DataGridView dgvListDisplay;
+        private System.Windows.Forms.Panel pnlSolutionsettings;
+        private System.Windows.Forms.TextBox tbAmsNetId;
+        private System.Windows.Forms.Button btnTableOK;
+        private System.Windows.Forms.Button btnOpenSolution;
+        private System.Windows.Forms.GroupBox gbAmsSettings;
+        private System.Windows.Forms.Label lbAmsNetId;
     }
 }
 

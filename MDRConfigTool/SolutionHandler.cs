@@ -14,6 +14,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using TwinCAT.Ads;
+using System.Windows.Forms;
 namespace MDRConfigTool
 {
     public class SolutionHandler
@@ -220,7 +221,7 @@ namespace MDRConfigTool
         public void SetNetId()
         {
             //finding the open form so we can get the textbox value
-            TextBox t = Application.OpenForms["FileSelector"].Controls["textBox1"] as TextBox;
+            TextBox t = Application.OpenForms["FileSelector"].Controls["tbAmsNetId"] as TextBox;
             //sets the target to the textbox value.
             sysMan.SetTargetNetId(t.Text);
         }//SetNetId()

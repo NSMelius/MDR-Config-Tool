@@ -44,5 +44,19 @@ namespace MDRConfigTool
 
 
         }
+
+        private void btnTableOK_Click(object sender, EventArgs e)
+        {
+            pnlDataDisplay.Visible = false;
+            pnlSolutionsettings.Visible = true;
+        }
+
+        private void btnOpenSolution_Click(object sender, EventArgs e)
+        {
+            SolutionHandler solHandler = new SolutionHandler();
+            solHandler.SetNetId();
+            solHandler.ScanDevicesAndBoxes();
+            solHandler.ActivateConfiguration();
+        }
     }
 }
