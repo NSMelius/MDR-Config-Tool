@@ -33,13 +33,14 @@
             this.btnOPenFile = new System.Windows.Forms.Button();
             this.pnlFileSelect = new System.Windows.Forms.Panel();
             this.pnlDataDisplay = new System.Windows.Forms.Panel();
+            this.btnTableOK = new System.Windows.Forms.Button();
             this.dgvListDisplay = new System.Windows.Forms.DataGridView();
             this.pnlSolutionsettings = new System.Windows.Forms.Panel();
-            this.tbAmsNetId = new System.Windows.Forms.TextBox();
-            this.btnTableOK = new System.Windows.Forms.Button();
-            this.lbAmsNetId = new System.Windows.Forms.Label();
-            this.gbAmsSettings = new System.Windows.Forms.GroupBox();
             this.btnOpenSolution = new System.Windows.Forms.Button();
+            this.gbAmsSettings = new System.Windows.Forms.GroupBox();
+            this.lbAmsNetId = new System.Windows.Forms.Label();
+            this.tbAmsNetId = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -77,12 +78,13 @@
             // 
             // pnlFileSelect
             // 
+            this.pnlFileSelect.Controls.Add(this.textBox1);
             this.pnlFileSelect.Controls.Add(this.tbFilePath);
             this.pnlFileSelect.Controls.Add(this.btnOPenFile);
             this.pnlFileSelect.Controls.Add(this.btnFileBrowse);
             this.pnlFileSelect.Location = new System.Drawing.Point(12, 12);
             this.pnlFileSelect.Name = "pnlFileSelect";
-            this.pnlFileSelect.Size = new System.Drawing.Size(603, 346);
+            this.pnlFileSelect.Size = new System.Drawing.Size(603, 385);
             this.pnlFileSelect.TabIndex = 3;
             // 
             // pnlDataDisplay
@@ -94,6 +96,16 @@
             this.pnlDataDisplay.Size = new System.Drawing.Size(603, 385);
             this.pnlDataDisplay.TabIndex = 4;
             this.pnlDataDisplay.Visible = false;
+            // 
+            // btnTableOK
+            // 
+            this.btnTableOK.Location = new System.Drawing.Point(524, 352);
+            this.btnTableOK.Name = "btnTableOK";
+            this.btnTableOK.Size = new System.Drawing.Size(75, 23);
+            this.btnTableOK.TabIndex = 1;
+            this.btnTableOK.Text = "OK";
+            this.btnTableOK.UseVisualStyleBackColor = true;
+            this.btnTableOK.Click += new System.EventHandler(this.btnTableOK_Click);
             // 
             // dgvListDisplay
             // 
@@ -113,32 +125,15 @@
             this.pnlSolutionsettings.Size = new System.Drawing.Size(603, 386);
             this.pnlSolutionsettings.TabIndex = 5;
             // 
-            // tbAmsNetId
+            // btnOpenSolution
             // 
-            this.tbAmsNetId.Location = new System.Drawing.Point(99, 38);
-            this.tbAmsNetId.Name = "tbAmsNetId";
-            this.tbAmsNetId.Size = new System.Drawing.Size(100, 20);
-            this.tbAmsNetId.TabIndex = 0;
-            this.tbAmsNetId.Text = "127.0.0.1";
-            // 
-            // btnTableOK
-            // 
-            this.btnTableOK.Location = new System.Drawing.Point(524, 352);
-            this.btnTableOK.Name = "btnTableOK";
-            this.btnTableOK.Size = new System.Drawing.Size(75, 23);
-            this.btnTableOK.TabIndex = 1;
-            this.btnTableOK.Text = "OK";
-            this.btnTableOK.UseVisualStyleBackColor = true;
-            this.btnTableOK.Click += new System.EventHandler(this.btnTableOK_Click);
-            // 
-            // lbAmsNetId
-            // 
-            this.lbAmsNetId.AutoSize = true;
-            this.lbAmsNetId.Location = new System.Drawing.Point(-3, 41);
-            this.lbAmsNetId.Name = "lbAmsNetId";
-            this.lbAmsNetId.Size = new System.Drawing.Size(96, 13);
-            this.lbAmsNetId.TabIndex = 1;
-            this.lbAmsNetId.Text = "Target Ams Net Id:";
+            this.btnOpenSolution.Location = new System.Drawing.Point(489, 307);
+            this.btnOpenSolution.Name = "btnOpenSolution";
+            this.btnOpenSolution.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenSolution.TabIndex = 3;
+            this.btnOpenSolution.Text = "Create";
+            this.btnOpenSolution.UseVisualStyleBackColor = true;
+            this.btnOpenSolution.Click += new System.EventHandler(this.btnOpenSolution_Click);
             // 
             // gbAmsSettings
             // 
@@ -151,24 +146,38 @@
             this.gbAmsSettings.TabStop = false;
             this.gbAmsSettings.Text = "Ams Settings";
             // 
-            // btnOpenSolution
+            // lbAmsNetId
             // 
-            this.btnOpenSolution.Location = new System.Drawing.Point(489, 307);
-            this.btnOpenSolution.Name = "btnOpenSolution";
-            this.btnOpenSolution.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenSolution.TabIndex = 3;
-            this.btnOpenSolution.Text = "Create";
-            this.btnOpenSolution.UseVisualStyleBackColor = true;
-            this.btnOpenSolution.Click += new System.EventHandler(this.btnOpenSolution_Click);
+            this.lbAmsNetId.AutoSize = true;
+            this.lbAmsNetId.Location = new System.Drawing.Point(-3, 41);
+            this.lbAmsNetId.Name = "lbAmsNetId";
+            this.lbAmsNetId.Size = new System.Drawing.Size(96, 13);
+            this.lbAmsNetId.TabIndex = 1;
+            this.lbAmsNetId.Text = "Target Ams Net Id:";
+            // 
+            // tbAmsNetId
+            // 
+            this.tbAmsNetId.Location = new System.Drawing.Point(99, 38);
+            this.tbAmsNetId.Name = "tbAmsNetId";
+            this.tbAmsNetId.Size = new System.Drawing.Size(100, 20);
+            this.tbAmsNetId.TabIndex = 0;
+            this.tbAmsNetId.Text = "127.0.0.1";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(88, 206);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 3;
             // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlFileSelect);
             this.Controls.Add(this.pnlSolutionsettings);
             this.Controls.Add(this.pnlDataDisplay);
-            this.Controls.Add(this.pnlFileSelect);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
@@ -196,6 +205,7 @@
         private System.Windows.Forms.Button btnOpenSolution;
         private System.Windows.Forms.GroupBox gbAmsSettings;
         private System.Windows.Forms.Label lbAmsNetId;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

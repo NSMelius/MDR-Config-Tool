@@ -15,27 +15,29 @@ using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using TwinCAT.Ads;
 using System.Windows.Forms;
+using System.Data;
+
 namespace MDRConfigTool
 {
     public class SolutionHandler
     {
-        public static TcAdsClient adsClient;
-        public static ITcSysManager11 sysMan;
-        public static EnvDTE.Project pro;
-        public static EnvDTE.Solution sol;
-        public static EnvDTE80.DTE2 dte;
-        public static EnvDTE80.ErrorItems errors;
-        public static EnvDTE80.ErrorItem item;
-        public static EnvDTE80.ErrorList el;
-        public static EnvDTE80.ToolWindows tw;
-        public static string error;
-        public static bool s;
-        public static bool f;
-        public static int result;
-        public static Excel.Application oXL;
-        public static Excel._Workbook oWB;
-        public static Excel._Worksheet oSheet;
-        public static Excel.Range oRng;
+        public TcAdsClient adsClient;
+        public ITcSysManager11 sysMan;
+        public EnvDTE.Project pro;
+        public EnvDTE.Solution sol;
+        public EnvDTE80.DTE2 dte;
+        public EnvDTE80.ErrorItems errors;
+        public EnvDTE80.ErrorItem item;
+        public EnvDTE80.ErrorList el;
+        public EnvDTE80.ToolWindows tw;
+        public string error;
+        public bool s;
+        public bool f;
+        public int result;
+        public Excel.Application oXL;
+        public Excel._Workbook oWB;
+        public Excel._Worksheet oSheet;
+        public Excel.Range oRng;
 
 
 
@@ -106,7 +108,7 @@ namespace MDRConfigTool
 
 
 
-        public static EnvDTE80.DTE2 attachToExistingDte(string solutionPath, string progId)
+        internal EnvDTE80.DTE2 attachToExistingDte(string solutionPath, string progId)
         {
             EnvDTE80.DTE2 dte = null;
             try
@@ -133,7 +135,7 @@ namespace MDRConfigTool
             return dte;
         }
 
-        public void ScanDevicesAndBoxes()
+        public void ScanDevicesAndBoxes(DataTable dt)
         {
             //Start Excel and get Application object.
             oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -193,17 +195,23 @@ namespace MDRConfigTool
 
                 foreach (ITcSmTreeItem Box in device)
                 {
+                    int j =  0;
                     oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
-
-                    foreach (ITcSmTreeItem box in Box)
+                    if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
-                        bTerm = box.Name.Contains(term);
+                        Box.Name = dt.Rows[j].ItemArray[0].ToString();
+
+                    }
+                        foreach (ITcSmTreeItem box in Box)
+                    {
+                        bTerm = box.ItemType == 6;
                         //checking to see if the box name contains the string Term, so we don't write extra EtherCAT data and only write the terminals
                         if (bTerm)
                         {
                             oSheet.Cells[i, 1] = box.Name; //writes each sub item into spreadsheet column rows
                             i++;
                         }
+                        
                     }
                 }
             } //end of foreach loops

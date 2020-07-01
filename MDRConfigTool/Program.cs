@@ -20,7 +20,7 @@ namespace MDRConfigTool
 {
     public class Program
     {
-       
+        private int iNumber;
 
         [STAThread]
         public static void Main(string[] args)
@@ -28,6 +28,14 @@ namespace MDRConfigTool
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);           
             Application.Run(new FileSelector());
+           
+
+            
+        }
+
+        public void helloWorld()
+        {
+            MessageBox.Show("Hello World");
         }
 
 

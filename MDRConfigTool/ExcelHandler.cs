@@ -46,6 +46,7 @@ namespace MDRConfigTool
 
             //create a new DataTable object. The DT holds data in a similar map as the Spreadsheet, and is easy to translate for the user.
             DataTable DT = new DataTable();
+
             Excel.Range headerRange = _worksheet.get_Range((Excel.Range)_worksheet.Cells[1, 1], (Excel.Range)_worksheet.Cells[1, nColumns]);
             Excel.Range dataRange = _worksheet.get_Range((Excel.Range)_worksheet.Cells[2,1], (Excel.Range)_worksheet.Cells[nRows,nColumns]);
             

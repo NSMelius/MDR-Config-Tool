@@ -14,9 +14,14 @@ namespace MDRConfigTool
     {
         OpenFileDialog ofd;
         ExcelHandler fileReader;
+        Timer timer = new Timer();
+        private static int count = 0;
         public FileSelector()
         {
             InitializeComponent();
+
+            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,5 +63,8 @@ namespace MDRConfigTool
             solHandler.ScanDevicesAndBoxes();
             solHandler.ActivateConfiguration();
         }
+
+ 
+
     }
 }
