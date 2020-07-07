@@ -32,6 +32,7 @@
             this.btnFileBrowse = new System.Windows.Forms.Button();
             this.btnOPenFile = new System.Windows.Forms.Button();
             this.pnlFileSelect = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.pnlDataDisplay = new System.Windows.Forms.Panel();
             this.btnTableOK = new System.Windows.Forms.Button();
             this.dgvListDisplay = new System.Windows.Forms.DataGridView();
@@ -40,7 +41,6 @@
             this.gbAmsSettings = new System.Windows.Forms.GroupBox();
             this.lbAmsNetId = new System.Windows.Forms.Label();
             this.tbAmsNetId = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -86,6 +86,13 @@
             this.pnlFileSelect.Name = "pnlFileSelect";
             this.pnlFileSelect.Size = new System.Drawing.Size(603, 385);
             this.pnlFileSelect.TabIndex = 3;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(88, 206);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 3;
             // 
             // pnlDataDisplay
             // 
@@ -163,21 +170,14 @@
             this.tbAmsNetId.TabIndex = 0;
             this.tbAmsNetId.Text = "127.0.0.1";
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(88, 206);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
-            // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlFileSelect);
             this.Controls.Add(this.pnlSolutionsettings);
-            this.Controls.Add(this.pnlDataDisplay);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);

@@ -42,10 +42,10 @@ namespace MDRConfigTool
 
 
 
-        
+
         public SolutionHandler()
         {
-            
+
             // Application.Run(new Form1());
 
             MessageFilter.Register();
@@ -195,14 +195,14 @@ namespace MDRConfigTool
 
                 foreach (ITcSmTreeItem Box in device)
                 {
-                    int j =  0;
+                    int j = 0;
                     oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
                         Box.Name = dt.Rows[j].ItemArray[0].ToString();
-
+                        j++;
                     }
-                        foreach (ITcSmTreeItem box in Box)
+                    foreach (ITcSmTreeItem box in Box)
                     {
                         bTerm = box.ItemType == 6;
                         //checking to see if the box name contains the string Term, so we don't write extra EtherCAT data and only write the terminals
@@ -211,7 +211,7 @@ namespace MDRConfigTool
                             oSheet.Cells[i, 1] = box.Name; //writes each sub item into spreadsheet column rows
                             i++;
                         }
-                        
+
                     }
                 }
             } //end of foreach loops
@@ -241,9 +241,8 @@ namespace MDRConfigTool
             //   adsClient.WriteControl(new StateInfo(AdsState.Start, adsClient.ReadState().DeviceState));
             sysMan.ActivateConfiguration();
             sysMan.StartRestartTwinCAT();
-        }//ActivateConfiguration()
+        }   //ActivateConfiguration()
     }//class
-
 
 
 }//namespace

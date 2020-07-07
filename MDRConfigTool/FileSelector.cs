@@ -16,6 +16,7 @@ namespace MDRConfigTool
         ExcelHandler fileReader;
         Timer timer = new Timer();
         private static int count = 0;
+        private DataTable DT;
         public FileSelector()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace MDRConfigTool
         private void btnOPenFile_Click(object sender, EventArgs e)
         {
             fileReader = new ExcelHandler(tbFilePath.Text);
-            DataTable DT = fileReader.RetrieveData();
+            DT = fileReader.RetrieveData();
             pnlFileSelect.Visible = false;
             pnlDataDisplay.Visible = true;
             dgvListDisplay.DataSource = DT;
@@ -60,7 +61,7 @@ namespace MDRConfigTool
         {
             SolutionHandler solHandler = new SolutionHandler();
             solHandler.SetNetId();
-            solHandler.ScanDevicesAndBoxes();
+            solHandler.ScanDevicesAndBoxes(DT);
             solHandler.ActivateConfiguration();
         }
 
