@@ -199,6 +199,7 @@ namespace MDRConfigTool
                     oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
+                        //iterates through the box names and replaces with name from excel.
                         Box.Name = dt.Rows[j].ItemArray[0].ToString();
                         j++;
                     }
