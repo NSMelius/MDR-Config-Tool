@@ -16,7 +16,6 @@ using Excel = Microsoft.Office.Interop.Excel;
 using TwinCAT.Ads;
 using System.Windows.Forms;
 using System.Data;
-using System.Text.RegularExpressions;
 
 namespace MDRConfigTool
 {
@@ -200,8 +199,8 @@ namespace MDRConfigTool
                     oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
-                        Box.Name = dt.Rows[j].ItemArray[0].ToString() +"_"+j;
-                        EditDriveParams(Box, dt.Rows[j].ItemArray[2].ToString());
+                        //iterates through the box names and replaces with name from excel.
+                        Box.Name = dt.Rows[j].ItemArray[0].ToString();
                         j++;
                     }
                     foreach (ITcSmTreeItem box in Box)
@@ -244,26 +243,6 @@ namespace MDRConfigTool
             sysMan.ActivateConfiguration();
             sysMan.StartRestartTwinCAT();
         }   //ActivateConfiguration()
-
-        private void EditDriveParams(ITcSmTreeItem Drive, string sfilename) {
-            string file = sfilename,  sFileRegex = @"^[\w,\s].{1}[A-Za-z]{3}";
-            TextBox tBox = (TextBox) Form.ActiveForm.Controls[Form.ActiveForm.Controls.IndexOfKey("tbFilePath")];
-            string filePath = tBox.Text;
-            Regex.Replace(filePath, sFileRegex, file + @".xml");
-            
-            XmlDocument XMLDoc = new XmlDocument();
-            
-            XMLDoc.LoadXml(filePath);
-            
-            string driveParams = Drive.ProduceXml();
-            XmlNode xmlNode = XMLDoc.SelectSingleNode("<InitCmds>");
-            string newStartListParam = xmlNode.Value;//"<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
-            int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
-            idx = idx + 10;
-            driveParams = driveParams.Insert(idx, newStartListParam);
-            Drive.ConsumeXml(driveParams);
-
-        }
     }//class
 
 
