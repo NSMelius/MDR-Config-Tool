@@ -14,6 +14,7 @@ namespace MDRConfigTool
     {
         OpenFileDialog ofd;
         ExcelHandler fileReader;
+        SolutionHandler solHandler;
         Timer timer = new Timer();
         private static int count = 0;
         private DataTable DT;
@@ -27,12 +28,12 @@ namespace MDRConfigTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ofd = new OpenFileDialog();
-            ofd.Title = "Select I/O Spreadsheet File";
-            ofd.InitialDirectory = @"C:\";
-            ofd.Filter = "All Files(*.*)|*.*|Excel Spreadsheets (*.xls,*.xlsm, *.xlsx)|*.xls;*.xlsm;*.xlsx| Text File (*.txt, *.csv)|*.txt;*.csv";
-            ofd.FilterIndex = 2;
-            ofd.RestoreDirectory = true;
+            this.ofd = new OpenFileDialog();
+            this.ofd.Title = "Select I/O Spreadsheet File";
+            this.ofd.InitialDirectory = @"C:\";
+            this.ofd.Filter = "All Files(*.*)|*.*|Excel Spreadsheets (*.xls,*.xlsm, *.xlsx)|*.xls;*.xlsm;*.xlsx| Text File (*.txt, *.csv)|*.txt;*.csv";
+            this.ofd.FilterIndex = 2;
+            this.ofd.RestoreDirectory = true;
 
             if(ofd.ShowDialog() == DialogResult.OK)
             {
@@ -42,27 +43,27 @@ namespace MDRConfigTool
 
         private void btnOPenFile_Click(object sender, EventArgs e)
         {
-            fileReader = new ExcelHandler(tbFilePath.Text);
-            DT = fileReader.RetrieveData();
-            pnlFileSelect.Visible = false;
-            pnlDataDisplay.Visible = true;
-            dgvListDisplay.DataSource = DT;
+            this.fileReader = new ExcelHandler(tbFilePath.Text);
+            this.DT = fileReader.RetrieveData();
+            this.pnlFileSelect.Visible = false;
+            this.pnlDataDisplay.Visible = true;
+            this.dgvListDisplay.DataSource = DT;
 
 
         }
 
         private void btnTableOK_Click(object sender, EventArgs e)
         {
-            pnlDataDisplay.Visible = false;
-            pnlSolutionsettings.Visible = true;
+            this.pnlDataDisplay.Visible = false;
+            this.pnlSolutionsettings.Visible = true;
         }
 
         private void btnOpenSolution_Click(object sender, EventArgs e)
         {
-            SolutionHandler solHandler = new SolutionHandler();
-            solHandler.SetNetId();
-            solHandler.ScanDevicesAndBoxes(DT);
-            solHandler.ActivateConfiguration();
+            this.solHandler = new SolutionHandler();
+            this.solHandler.SetNetId();
+            this.solHandler.ScanDevicesAndBoxes(DT);
+            this.solHandler.ActivateConfiguration();
         }
 
  
