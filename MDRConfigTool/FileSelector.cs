@@ -15,6 +15,7 @@ namespace MDRConfigTool
         OpenFileDialog ofd;
         ExcelHandler fileReader;
         Timer timer = new Timer();
+        SolutionHandler solHandler;
         private static int count = 0;
         private DataTable DT;
         public FileSelector()
@@ -38,6 +39,7 @@ namespace MDRConfigTool
             {
                 tbFilePath.Text = ofd.FileName;
             }
+            
         }
 
         private void btnOPenFile_Click(object sender, EventArgs e)
@@ -53,19 +55,46 @@ namespace MDRConfigTool
 
         private void btnTableOK_Click(object sender, EventArgs e)
         {
+            solHandler.ScanDevicesAndBoxes(DT);
             pnlDataDisplay.Visible = false;
             pnlSolutionsettings.Visible = true;
         }
 
         private void btnOpenSolution_Click(object sender, EventArgs e)
         {
-            SolutionHandler solHandler = new SolutionHandler();
+            
             solHandler.SetNetId();
-            solHandler.ScanDevicesAndBoxes(DT);
+            
             solHandler.ActivateConfiguration();
+            pnlSolutionsettings.Visible = false;
+            pnlFileSelect.Visible = true;
+
         }
 
- 
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            solHandler = new SolutionHandler();
+            pnlWelcome.Visible = false;
+            pnlSolutionsettings.Visible = true;
+        }
 
+        private void btnLibBrowse_Click(object sender, EventArgs e)
+        {
+            ofd = new OpenFileDialog();
+            ofd.Title = "Select MDR control library ";
+            ofd.Filter = "All Files (*.*)|*.*| Library file(*.library, *.compiled-library)|*.library;*.compiled-library";
+            ofd.FilterIndex = 1;
+            ofd.RestoreDirectory = true;
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                tbLibFile.Text = ofd.FileName;
+            }
+        }
+
+        private void btnLibNext_Click(object sender, EventArgs e)
+        {
+         solHandler.
+        }
     }
 }

@@ -138,13 +138,13 @@ namespace MDRConfigTool
         public void ScanDevicesAndBoxes(DataTable dt)
         {
             //Start Excel and get Application object.
-            oXL = new Microsoft.Office.Interop.Excel.Application();
+            /*oXL = new Microsoft.Office.Interop.Excel.Application();
             oXL.Visible = true;
 
             //Get a new workbook.
             oWB = (Microsoft.Office.Interop.Excel._Workbook)(oXL.Workbooks.Add());
             oSheet = (Microsoft.Office.Interop.Excel._Worksheet)oWB.ActiveSheet;
-
+            */
 
 
             // sysMan.SetTargetNetId("1.2.3.4.5.6"); // Setting of the target NetId.
@@ -157,7 +157,7 @@ namespace MDRConfigTool
             xmlDoc.LoadXml(scannedXml); // Loads the Xml data into an XML Document
             XmlNodeList xmlDeviceList = xmlDoc.SelectNodes("TreeItem/DeviceGrpDef/FoundDevices/Device");
             List<ITcSmTreeItem> devices = new List<ITcSmTreeItem>();
-
+            
             //local variables for our spreadsheet writing statements
             int deviceCount = 0;
             string term = "Term";
@@ -199,7 +199,7 @@ namespace MDRConfigTool
                     oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
-                        Box.Name = dt.Rows[j].ItemArray[0].ToString();
+                        Box.Name = dt.Rows[j].ItemArray[0].ToString()+j.ToString();
                         j++;
                     }
                     foreach (ITcSmTreeItem box in Box)
@@ -216,14 +216,14 @@ namespace MDRConfigTool
                 }
             } //end of foreach loops
 
-            oXL.Visible = false;
+            /*oXL.Visible = false;
             oXL.UserControl = false;
             oWB.SaveAs(@"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\ErrorOutput\IO_List.xlsx", Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
                 false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
                 Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
             oWB.Close();
-            oXL.Quit();
+            oXL.Quit();*/
         }//ScanDevicesandBoxes()
 
         public void SetNetId()
@@ -242,7 +242,20 @@ namespace MDRConfigTool
             sysMan.ActivateConfiguration();
             sysMan.StartRestartTwinCAT();
         }   //ActivateConfiguration()
+
+        public void EditParams(ITcSmTreeItem drive, string filename)
+        {
+            
+            string driveParams = drive.ProduceXml();
+            string newStartListParam = "<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
+            int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
+            idx = idx + 10;
+            driveParams = driveParams.Insert(idx, newStartListParam);
+            drive.ConsumeXml(driveParams);
+
+        }//EditParams
     }//class
 
+  
 
 }//namespace
