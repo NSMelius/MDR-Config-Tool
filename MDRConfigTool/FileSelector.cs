@@ -14,8 +14,8 @@ namespace MDRConfigTool
     {
         OpenFileDialog ofd;
         ExcelHandler fileReader;
-        SolutionHandler solHandler;
         Timer timer = new Timer();
+        SolutionHandler solHandler;
         private static int count = 0;
         private DataTable DT;
         public FileSelector()
@@ -28,45 +28,73 @@ namespace MDRConfigTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.ofd = new OpenFileDialog();
-            this.ofd.Title = "Select I/O Spreadsheet File";
-            this.ofd.InitialDirectory = @"C:\";
-            this.ofd.Filter = "All Files(*.*)|*.*|Excel Spreadsheets (*.xls,*.xlsm, *.xlsx)|*.xls;*.xlsm;*.xlsx| Text File (*.txt, *.csv)|*.txt;*.csv";
-            this.ofd.FilterIndex = 2;
-            this.ofd.RestoreDirectory = true;
+            ofd = new OpenFileDialog();
+            ofd.Title = "Select I/O Spreadsheet File";
+            ofd.InitialDirectory = @"C:\";
+            ofd.Filter = "All Files(*.*)|*.*|Excel Spreadsheets (*.xls,*.xlsm, *.xlsx)|*.xls;*.xlsm;*.xlsx| Text File (*.txt, *.csv)|*.txt;*.csv";
+            ofd.FilterIndex = 2;
+            ofd.RestoreDirectory = true;
 
             if(ofd.ShowDialog() == DialogResult.OK)
             {
                 tbFilePath.Text = ofd.FileName;
             }
+            
         }
 
         private void btnOPenFile_Click(object sender, EventArgs e)
         {
-            this.fileReader = new ExcelHandler(tbFilePath.Text);
-            this.DT = fileReader.RetrieveData();
-            this.pnlFileSelect.Visible = false;
-            this.pnlDataDisplay.Visible = true;
-            this.dgvListDisplay.DataSource = DT;
+            fileReader = new ExcelHandler(tbFilePath.Text);
+            DT = fileReader.RetrieveData();
+            pnlFileSelect.Visible = false;
+            pnlDataDisplay.Visible = true;
+            dgvListDisplay.DataSource = DT;
 
 
         }
 
         private void btnTableOK_Click(object sender, EventArgs e)
         {
-            this.pnlDataDisplay.Visible = false;
-            this.pnlSolutionsettings.Visible = true;
+            solHandler.ScanDevicesAndBoxes(DT);
+            pnlDataDisplay.Visible = false;
+            pnlSolutionsettings.Visible = true;
         }
 
         private void btnOpenSolution_Click(object sender, EventArgs e)
         {
-            this.solHandler = new SolutionHandler();
-            this.solHandler.SetNetId();
-            this.solHandler.ScanDevicesAndBoxes(DT);
-            this.solHandler.ActivateConfiguration();
+            
+            solHandler.SetNetId();
+            
+            solHandler.ActivateConfiguration();
+            pnlSolutionsettings.Visible = false;
+            pnlFileSelect.Visible = true;
+
         }
 
- 
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            solHandler = new SolutionHandler();
+            pnlWelcome.Visible = false;
+            pnlSolutionsettings.Visible = true;
+        }
 
+        private void btnLibBrowse_Click(object sender, EventArgs e)
+        {
+            ofd = new OpenFileDialog();
+            ofd.Title = "Select MDR control library ";
+            ofd.Filter = "All Files (*.*)|*.*| Library file(*.library, *.compiled-library)|*.library;*.compiled-library";
+            ofd.FilterIndex = 1;
+            ofd.RestoreDirectory = true;
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                tbLibFile.Text = ofd.FileName;
+            }
+        }
+
+        private void btnLibNext_Click(object sender, EventArgs e)
+        {
+         solHandler.
+        }
     }
 }
