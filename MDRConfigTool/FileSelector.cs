@@ -18,10 +18,11 @@ namespace MDRConfigTool
         SolutionHandler solHandler;
         private static int count = 0;
         private DataTable DT;
+
         public FileSelector()
         {
             InitializeComponent();
-
+            pnlWelcome.BringToFront();
             
 
         }
@@ -46,10 +47,11 @@ namespace MDRConfigTool
         {
             fileReader = new ExcelHandler(tbFilePath.Text);
             DT = fileReader.RetrieveData();
+            solHandler = new SolutionHandler();
             pnlFileSelect.Visible = false;
             pnlDataDisplay.Visible = true;
             dgvListDisplay.DataSource = DT;
-
+            
 
         }
 
@@ -73,28 +75,22 @@ namespace MDRConfigTool
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            solHandler = new SolutionHandler();
+            
             pnlWelcome.Visible = false;
-            pnlSolutionsettings.Visible = true;
+            pnlFileSelect.Visible = true;
+        
         }
 
-        private void btnLibBrowse_Click(object sender, EventArgs e)
-        {
-            ofd = new OpenFileDialog();
-            ofd.Title = "Select MDR control library ";
-            ofd.Filter = "All Files (*.*)|*.*| Library file(*.library, *.compiled-library)|*.library;*.compiled-library";
-            ofd.FilterIndex = 1;
-            ofd.RestoreDirectory = true;
 
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                tbLibFile.Text = ofd.FileName;
-            }
+
+        private void tbAmsNetId_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
-        private void btnLibNext_Click(object sender, EventArgs e)
+        private void lbAmsNetId_Click(object sender, EventArgs e)
         {
-         solHandler.
+
         }
     }
 }
