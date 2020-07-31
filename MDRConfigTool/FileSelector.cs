@@ -94,7 +94,15 @@ namespace MDRConfigTool
 
         private void btnLibNext_Click(object sender, EventArgs e)
         {
-         solHandler.
+            button1_Click(sender, e);
+            btnOPenFile_Click(sender, e);
+            solHandler = new SolutionHandler();
+            pnlWelcome.Visible = false;
+            pnlSolutionsettings.Visible = true;
+
+            solHandler.PLCdeclarations(DT);
+
+            solHandler.linkVariables(DT);
         }
     }
 }
