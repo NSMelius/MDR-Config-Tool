@@ -30,9 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileSelector));
             this.tbFilePath = new System.Windows.Forms.TextBox();
-            this.btnFileBrowse = new System.Windows.Forms.Button();
+            this.btnFolderBrowse = new System.Windows.Forms.Button();
             this.btnOPenFile = new System.Windows.Forms.Button();
             this.pnlFileSelect = new System.Windows.Forms.Panel();
+            this.btnBrowseFile = new System.Windows.Forms.Button();
+            this.tbFileName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbProjectName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.lbFileSelect = new System.Windows.Forms.Label();
             this.pnlDataDisplay = new System.Windows.Forms.Panel();
             this.lbReadData = new System.Windows.Forms.Label();
@@ -48,7 +54,6 @@
             this.lbWelcome = new System.Windows.Forms.Label();
             this.pbWelcome = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -66,15 +71,15 @@
             this.tbFilePath.TabIndex = 0;
             this.tbFilePath.Text = "C:\\";
             // 
-            // btnFileBrowse
+            // btnFolderBrowse
             // 
-            this.btnFileBrowse.Location = new System.Drawing.Point(400, 131);
-            this.btnFileBrowse.Name = "btnFileBrowse";
-            this.btnFileBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btnFileBrowse.TabIndex = 1;
-            this.btnFileBrowse.Text = "Browse...";
-            this.btnFileBrowse.UseVisualStyleBackColor = true;
-            this.btnFileBrowse.Click += new System.EventHandler(this.button1_Click);
+            this.btnFolderBrowse.Location = new System.Drawing.Point(400, 131);
+            this.btnFolderBrowse.Name = "btnFolderBrowse";
+            this.btnFolderBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnFolderBrowse.TabIndex = 1;
+            this.btnFolderBrowse.Text = "Browse...";
+            this.btnFolderBrowse.UseVisualStyleBackColor = true;
+            this.btnFolderBrowse.Click += new System.EventHandler(this.FolderBrowse_Click);
             // 
             // btnOPenFile
             // 
@@ -88,25 +93,84 @@
             // 
             // pnlFileSelect
             // 
+            this.pnlFileSelect.Controls.Add(this.btnBrowseFile);
+            this.pnlFileSelect.Controls.Add(this.tbFileName);
+            this.pnlFileSelect.Controls.Add(this.label2);
+            this.pnlFileSelect.Controls.Add(this.tbProjectName);
+            this.pnlFileSelect.Controls.Add(this.label1);
             this.pnlFileSelect.Controls.Add(this.richTextBox1);
             this.pnlFileSelect.Controls.Add(this.lbFileSelect);
             this.pnlFileSelect.Controls.Add(this.tbFilePath);
             this.pnlFileSelect.Controls.Add(this.btnOPenFile);
-            this.pnlFileSelect.Controls.Add(this.btnFileBrowse);
+            this.pnlFileSelect.Controls.Add(this.btnFolderBrowse);
             this.pnlFileSelect.Location = new System.Drawing.Point(12, 12);
             this.pnlFileSelect.Name = "pnlFileSelect";
             this.pnlFileSelect.Size = new System.Drawing.Size(603, 385);
             this.pnlFileSelect.TabIndex = 3;
             this.pnlFileSelect.Visible = false;
             // 
+            // btnBrowseFile
+            // 
+            this.btnBrowseFile.Location = new System.Drawing.Point(88, 240);
+            this.btnBrowseFile.Name = "btnBrowseFile";
+            this.btnBrowseFile.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseFile.TabIndex = 10;
+            this.btnBrowseFile.Text = "Browse...";
+            this.btnBrowseFile.UseVisualStyleBackColor = true;
+            this.btnBrowseFile.Click += new System.EventHandler(this.btnBrowseFile_Click);
+            // 
+            // tbFileName
+            // 
+            this.tbFileName.Location = new System.Drawing.Point(88, 213);
+            this.tbFileName.Name = "tbFileName";
+            this.tbFileName.Size = new System.Drawing.Size(125, 20);
+            this.tbFileName.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(91, 196);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Drive List File Name:";
+            // 
+            // tbProjectName
+            // 
+            this.tbProjectName.Location = new System.Drawing.Point(88, 173);
+            this.tbProjectName.Name = "tbProjectName";
+            this.tbProjectName.Size = new System.Drawing.Size(125, 20);
+            this.tbProjectName.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(91, 157);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(122, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Choose a Project Name:";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(281, 268);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(318, 32);
+            this.richTextBox1.TabIndex = 5;
+            this.richTextBox1.Text = "NOTE: Make sure your Excel spreadsheet, drive configuration file, and MDR_Control" +
+    " library are in the directory you selected.";
+            // 
             // lbFileSelect
             // 
             this.lbFileSelect.AutoSize = true;
             this.lbFileSelect.Location = new System.Drawing.Point(88, 86);
             this.lbFileSelect.Name = "lbFileSelect";
-            this.lbFileSelect.Size = new System.Drawing.Size(234, 13);
+            this.lbFileSelect.Size = new System.Drawing.Size(343, 13);
             this.lbFileSelect.TabIndex = 3;
-            this.lbFileSelect.Text = "Please provide the location of your spreadsheet:";
+            this.lbFileSelect.Text = "Please choose the directory where you would like to save your solution:";
             // 
             // pnlDataDisplay
             // 
@@ -196,7 +260,6 @@
             this.lbAmsNetId.Size = new System.Drawing.Size(96, 13);
             this.lbAmsNetId.TabIndex = 1;
             this.lbAmsNetId.Text = "Target Ams Net Id:";
-            this.lbAmsNetId.Click += new System.EventHandler(this.lbAmsNetId_Click);
             // 
             // tbAmsNetId
             // 
@@ -205,7 +268,6 @@
             this.tbAmsNetId.Size = new System.Drawing.Size(100, 20);
             this.tbAmsNetId.TabIndex = 0;
             this.tbAmsNetId.Text = "127.0.0.1";
-            this.tbAmsNetId.TextChanged += new System.EventHandler(this.tbAmsNetId_TextChanged);
             // 
             // pnlWelcome
             // 
@@ -247,18 +309,6 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(281, 268);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(318, 32);
-            this.richTextBox1.TabIndex = 5;
-            this.richTextBox1.Text = "NOTE: Make sure your Excel spreadsheet, drive configuration file, and MDR_Control" +
-    " library are in the directory you selected.";
-            // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,7 +339,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox tbFilePath;
-        private System.Windows.Forms.Button btnFileBrowse;
+        private System.Windows.Forms.Button btnFolderBrowse;
         private System.Windows.Forms.Button btnOPenFile;
         private System.Windows.Forms.Panel pnlFileSelect;
         private System.Windows.Forms.Panel pnlDataDisplay;
@@ -308,6 +358,11 @@
         private System.Windows.Forms.Label lbWelcome;
         private System.Windows.Forms.Label lbNetId;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbProjectName;
+        private System.Windows.Forms.TextBox tbFileName;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnBrowseFile;
     }
 }
 
