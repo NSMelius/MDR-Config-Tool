@@ -83,7 +83,17 @@ namespace MDRConfigTool
             AddLibrary(ref libraryManager);
 
 
+            /* ------------------------------------------------------
+             * Adding our PLC code
+             * ------------------------------------------------------ */
 
+            //PLCdeclarations();
+
+            //  linkVariables();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FileSelector());
 
             MessageFilter.Revoke();
         }
@@ -91,47 +101,64 @@ namespace MDRConfigTool
         public void PLCdeclarations(DataTable dt)
         {
 
+            string FB_MDR = "FB_MDR_Control;";
+            int i = 1;
             string mainVar = @"PROGRAM MAIN
-VAR" + Environment.NewLine;
-            string endMain = Environment.NewLine + @"          
+VAR";
+            string endMain = @"          
 END_VAR";
+            ITcSmTreeItem io = sysMan.LookupTreeItem("TIID");
+            //     io.ExportChild("Device 1 (EtherCAT)", @"C:\TwinCAT\Device 1 (EtherCAT).xti");
+            XDocument doc = XDocument.Load(@"C:\TwinCAT\Device 1 (EtherCAT).xti");
 
-
-            //Add function blocks to MAIN declaration
-            ITcSmTreeItem main = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^POUs^MAIN");
-
-            //Cast to specific interface for declaration and implementation area
-            ITcPlcDeclaration mainDecl = (ITcPlcDeclaration)main;
-            ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
-
-
-            //Get current declaration and implementation area content
-            string strMainDecl = mainDecl.DeclarationText;
-            string strMainImpl = mainImpl.ImplementationText;
-
-            string[] boxName = new string[dt.Rows.Count];
-            int j = 0;
-            int i = 0;
-
-
-            for (i = 0; i < dt.Rows.Count -1; i++)
+            List<ITcSmTreeItem> devices = new List<ITcSmTreeItem>();
+            foreach (ITcSmTreeItem Box in devices)
             {
-                boxName[i] = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
-                Console.WriteLine(boxName[i]);
-                j++;
-            }
+                Console.WriteLine(Box.Name);
+                if (Box.ItemSubTypeName.Contains("EP7402-0057"))
+                {
 
-            declarations = string.Join(": FB_MDR_Control;" + Environment.NewLine, boxName);
-            mainDecl.DeclarationText = mainVar + declarations + endMain;
+                    //Add function blocks to MAIN declaration
+                    ITcSmTreeItem main = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^POUs^MAIN");
 
+                    //Cast to specific interface for declaration and implementation area
+                    ITcPlcDeclaration mainDecl = (ITcPlcDeclaration)main;
+                    ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
+
+
+                    //Get current declaration and implementation area content
+                    string strMainDecl = mainDecl.DeclarationText;
+                    string strMainImpl = mainImpl.ImplementationText;
+
+                    string[] boxName = new string[Box.ChildCount];
+                    //    for (int i = 0; i < Box.ChildCount; i++)
+                    //  {
+
+                    boxName[i] = Box.Name;
+                    i++;
+                    declarations = string.Format("{0}", boxName[i] + ":" + FB_MDR + Environment.NewLine);
+                    System.IO.File.WriteAllText(@"C:\TwinCAT\record.txt", declarations + Environment.NewLine);
+                    // mainDecl.DeclarationText = mainVar + declarations + endMain;
+                    //  }
+
+
+                }
+                /*
+                foreach (ITcSmTreeItem EtherCAT in Box)
+                {
+
+                }
+                 */
+
+            }//end of foreach loops
             var settings = dte.GetObject("TcAutomationSettings");
             settings.SilentMode = true;
             dte.Solution.SolutionBuild.Build(true); // compile the plc project
             settings.SilentMode = false;
 
-    }
+        }
 
-    public static void AddLibrary(ref ITcPlcLibraryManager libraryManager)
+        public static void AddLibrary(ref ITcPlcLibraryManager libraryManager)
         {
             //---Create new repo path
             string newRepoPath = @"C:\MDR_Library_Repo";
@@ -163,34 +190,25 @@ END_VAR";
             Directory.Delete(newRepoPath, true);
         }
 
-        public void linkVariables(DataTable dt)
+        public static void linkVariables()
         {
-
-            string[] boxName = new string[dt.Rows.Count];
-            int j = 0;
-            int i = 0;
+            /* ------------------------------------------------------
+            * Create variable mapping between I/Os and PLC inputs/outputs
+             * 
+             * MAKE a template of the inputs and ouputs for one given device.
+             * Then you need to reuse that template string path whenever a new EP7402 is found.
+             * it will be one of your objects basically that you insert into the string + obj.
+             * 
+             * Then you somehow need to increment based off the ethercat address of name box.
+            * ------------------------------------------------------ */
             string plcInputsPath = "TIPC^Untitled1^Untitled1 Instance^PlcTask Inputs";
             string plcOutputsPath = "TIPC^Untitled1^Untitled1 Instance^PlcTask Outputs";
 
-            for (i = 0; i < dt.Rows.Count-1; i++)
-            {
-                boxName[i] = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
-                if (i >= 1) {
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i-1] + ".stInput^Control_3", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_3");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i-1] + ".stInput^Control_4", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_4");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_1", plcOutputsPath + "^MAIN." + boxName[i-1] + ".stOutput^Control_1");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_2", plcOutputsPath + "^MAIN." + boxName[i-1] + ".stOutput^Control_2");
-                }
-
-
-                Console.WriteLine(boxName[i]);
-                j++;
-            }
-
-            
-
-       
-
+            sysMan.LinkVariables(plcInputsPath + "^MAIN.fbMDR.stInput^Control_3", plcOutputsPath + "^MAIN.fbMDR_2.stOutput^Control_3");
+            sysMan.LinkVariables(plcInputsPath + "^MAIN.fbMDR.stInput^Control_4", plcOutputsPath + "^MAIN.fbMDR_2.stOutput^Control_4");
+            sysMan.LinkVariables(plcInputsPath + "^MAIN.fbMDR_2.stInput^Control_1", plcOutputsPath + "^MAIN.fbMDR.stOutput^Control_1");
+            sysMan.LinkVariables(plcInputsPath + "^MAIN.fbMDR_2.stInput^Control_2", plcOutputsPath + "^MAIN.fbMDR.stOutput^Control_2");
+            //Control_3 . MAIN.fbMDR_2.stOutput . PlcTask Outputs . Untitled1 Instance . Untitled1
         }
 
         public static void activateAndRunPLC()
@@ -262,7 +280,7 @@ END_VAR";
 
             // sysMan.SetTargetNetId("1.2.3.4.5.6"); // Setting of the target NetId.
             ITcSmTreeItem ioDevicesItem = sysMan.LookupTreeItem("TIID"); // Get The IO Devices Node
-            
+
             // Scan Devices (Be sure that the target system is in Config mode!)
             string scannedXml = ioDevicesItem.ProduceXml(false); // Produce Xml implicitly starts the ScanDevices on this node.
 
@@ -286,7 +304,7 @@ END_VAR";
                 XmlNode xmlAddress = node.SelectSingleNode("AddressInfo");
 
                 ITcSmTreeItem device = ioDevicesItem.CreateChild(string.Format("Device_{0}", ++deviceCount), itemSubType, string.Empty, null);
-                
+
                 string xml = string.Format("<TreeItem><DeviceDef>{0}</DeviceDef></TreeItem>", xmlAddress.OuterXml);
                 device.ConsumeXml(xml); // Consume Xml Parameters (here the Address of the Device)
                 devices.Add(device);
@@ -377,7 +395,6 @@ END_VAR";
             drive.ConsumeXml(driveParams);
 
         }//EditParams
-
     }//class
 
   

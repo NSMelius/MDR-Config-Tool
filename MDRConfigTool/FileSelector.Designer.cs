@@ -42,12 +42,12 @@
             this.lbAmsNetId = new System.Windows.Forms.Label();
             this.tbAmsNetId = new System.Windows.Forms.TextBox();
             this.pnlWelcome = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlLibSelect = new System.Windows.Forms.Panel();
-            this.btnLibNext = new System.Windows.Forms.Button();
-            this.btnLibBrowse = new System.Windows.Forms.Button();
             this.tbLibFile = new System.Windows.Forms.TextBox();
+            this.btnLibBrowse = new System.Windows.Forms.Button();
+            this.btnLibNext = new System.Windows.Forms.Button();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -60,19 +60,17 @@
             // 
             // tbFilePath
             // 
-            this.tbFilePath.Location = new System.Drawing.Point(117, 129);
-            this.tbFilePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbFilePath.Location = new System.Drawing.Point(88, 105);
             this.tbFilePath.Name = "tbFilePath";
-            this.tbFilePath.Size = new System.Drawing.Size(515, 22);
+            this.tbFilePath.Size = new System.Drawing.Size(387, 20);
             this.tbFilePath.TabIndex = 0;
             this.tbFilePath.Text = "C:\\";
             // 
             // btnFileBrowse
             // 
-            this.btnFileBrowse.Location = new System.Drawing.Point(533, 161);
-            this.btnFileBrowse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFileBrowse.Location = new System.Drawing.Point(400, 131);
             this.btnFileBrowse.Name = "btnFileBrowse";
-            this.btnFileBrowse.Size = new System.Drawing.Size(100, 28);
+            this.btnFileBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnFileBrowse.TabIndex = 1;
             this.btnFileBrowse.Text = "Browse...";
             this.btnFileBrowse.UseVisualStyleBackColor = true;
@@ -80,10 +78,9 @@
             // 
             // btnOPenFile
             // 
-            this.btnOPenFile.Location = new System.Drawing.Point(699, 377);
-            this.btnOPenFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOPenFile.Location = new System.Drawing.Point(524, 306);
             this.btnOPenFile.Name = "btnOPenFile";
-            this.btnOPenFile.Size = new System.Drawing.Size(100, 28);
+            this.btnOPenFile.Size = new System.Drawing.Size(75, 23);
             this.btnOPenFile.TabIndex = 2;
             this.btnOPenFile.Text = "Open";
             this.btnOPenFile.UseVisualStyleBackColor = true;
@@ -94,29 +91,26 @@
             this.pnlFileSelect.Controls.Add(this.tbFilePath);
             this.pnlFileSelect.Controls.Add(this.btnOPenFile);
             this.pnlFileSelect.Controls.Add(this.btnFileBrowse);
-            this.pnlFileSelect.Location = new System.Drawing.Point(355, 210);
-            this.pnlFileSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlFileSelect.Location = new System.Drawing.Point(266, 171);
             this.pnlFileSelect.Name = "pnlFileSelect";
-            this.pnlFileSelect.Size = new System.Drawing.Size(465, 278);
+            this.pnlFileSelect.Size = new System.Drawing.Size(349, 226);
             this.pnlFileSelect.TabIndex = 3;
             // 
             // pnlDataDisplay
             // 
             this.pnlDataDisplay.Controls.Add(this.btnTableOK);
             this.pnlDataDisplay.Controls.Add(this.dgvListDisplay);
-            this.pnlDataDisplay.Location = new System.Drawing.Point(149, 121);
-            this.pnlDataDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlDataDisplay.Location = new System.Drawing.Point(112, 98);
             this.pnlDataDisplay.Name = "pnlDataDisplay";
-            this.pnlDataDisplay.Size = new System.Drawing.Size(671, 368);
+            this.pnlDataDisplay.Size = new System.Drawing.Size(503, 299);
             this.pnlDataDisplay.TabIndex = 4;
             this.pnlDataDisplay.Visible = false;
             // 
             // btnTableOK
             // 
-            this.btnTableOK.Location = new System.Drawing.Point(699, 433);
-            this.btnTableOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnTableOK.Location = new System.Drawing.Point(524, 352);
             this.btnTableOK.Name = "btnTableOK";
-            this.btnTableOK.Size = new System.Drawing.Size(100, 28);
+            this.btnTableOK.Size = new System.Drawing.Size(75, 23);
             this.btnTableOK.TabIndex = 1;
             this.btnTableOK.Text = "OK";
             this.btnTableOK.UseVisualStyleBackColor = true;
@@ -125,29 +119,26 @@
             // dgvListDisplay
             // 
             this.dgvListDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListDisplay.Location = new System.Drawing.Point(3, 0);
-            this.dgvListDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvListDisplay.Location = new System.Drawing.Point(2, 0);
             this.dgvListDisplay.Name = "dgvListDisplay";
             this.dgvListDisplay.ReadOnly = true;
-            this.dgvListDisplay.Size = new System.Drawing.Size(796, 402);
+            this.dgvListDisplay.Size = new System.Drawing.Size(597, 327);
             this.dgvListDisplay.TabIndex = 0;
             // 
             // pnlSolutionsettings
             // 
             this.pnlSolutionsettings.Controls.Add(this.btnOpenSolution);
             this.pnlSolutionsettings.Controls.Add(this.gbAmsSettings);
-            this.pnlSolutionsettings.Location = new System.Drawing.Point(96, 89);
-            this.pnlSolutionsettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlSolutionsettings.Location = new System.Drawing.Point(72, 72);
             this.pnlSolutionsettings.Name = "pnlSolutionsettings";
-            this.pnlSolutionsettings.Size = new System.Drawing.Size(724, 400);
+            this.pnlSolutionsettings.Size = new System.Drawing.Size(543, 325);
             this.pnlSolutionsettings.TabIndex = 5;
             // 
             // btnOpenSolution
             // 
-            this.btnOpenSolution.Location = new System.Drawing.Point(667, 434);
-            this.btnOpenSolution.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOpenSolution.Location = new System.Drawing.Point(500, 353);
             this.btnOpenSolution.Name = "btnOpenSolution";
-            this.btnOpenSolution.Size = new System.Drawing.Size(132, 28);
+            this.btnOpenSolution.Size = new System.Drawing.Size(99, 23);
             this.btnOpenSolution.TabIndex = 3;
             this.btnOpenSolution.Text = "Create Solution";
             this.btnOpenSolution.UseVisualStyleBackColor = true;
@@ -157,11 +148,9 @@
             // 
             this.gbAmsSettings.Controls.Add(this.lbAmsNetId);
             this.gbAmsSettings.Controls.Add(this.tbAmsNetId);
-            this.gbAmsSettings.Location = new System.Drawing.Point(216, 130);
-            this.gbAmsSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbAmsSettings.Location = new System.Drawing.Point(162, 106);
             this.gbAmsSettings.Name = "gbAmsSettings";
-            this.gbAmsSettings.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbAmsSettings.Size = new System.Drawing.Size(309, 123);
+            this.gbAmsSettings.Size = new System.Drawing.Size(232, 100);
             this.gbAmsSettings.TabIndex = 2;
             this.gbAmsSettings.TabStop = false;
             this.gbAmsSettings.Text = "Ams Settings";
@@ -169,19 +158,17 @@
             // lbAmsNetId
             // 
             this.lbAmsNetId.AutoSize = true;
-            this.lbAmsNetId.Location = new System.Drawing.Point(-4, 50);
-            this.lbAmsNetId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbAmsNetId.Location = new System.Drawing.Point(-3, 41);
             this.lbAmsNetId.Name = "lbAmsNetId";
-            this.lbAmsNetId.Size = new System.Drawing.Size(126, 17);
+            this.lbAmsNetId.Size = new System.Drawing.Size(96, 13);
             this.lbAmsNetId.TabIndex = 1;
             this.lbAmsNetId.Text = "Target Ams Net Id:";
             // 
             // tbAmsNetId
             // 
-            this.tbAmsNetId.Location = new System.Drawing.Point(132, 47);
-            this.tbAmsNetId.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbAmsNetId.Location = new System.Drawing.Point(99, 38);
             this.tbAmsNetId.Name = "tbAmsNetId";
-            this.tbAmsNetId.Size = new System.Drawing.Size(132, 22);
+            this.tbAmsNetId.Size = new System.Drawing.Size(100, 20);
             this.tbAmsNetId.TabIndex = 0;
             this.tbAmsNetId.Text = "127.0.0.1";
             // 
@@ -189,86 +176,78 @@
             // 
             this.pnlWelcome.Controls.Add(this.pictureBox1);
             this.pnlWelcome.Controls.Add(this.btnStart);
-            this.pnlWelcome.Location = new System.Drawing.Point(120, 106);
-            this.pnlWelcome.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlWelcome.Location = new System.Drawing.Point(90, 86);
             this.pnlWelcome.Name = "pnlWelcome";
-            this.pnlWelcome.Size = new System.Drawing.Size(700, 383);
+            this.pnlWelcome.Size = new System.Drawing.Size(525, 311);
             this.pnlWelcome.TabIndex = 6;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(88, 4);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(527, 398);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(623, 405);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStart.Location = new System.Drawing.Point(467, 329);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(100, 28);
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Next";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(66, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(395, 323);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // pnlLibSelect
             // 
             this.pnlLibSelect.Controls.Add(this.btnLibNext);
             this.pnlLibSelect.Controls.Add(this.btnLibBrowse);
             this.pnlLibSelect.Controls.Add(this.tbLibFile);
-            this.pnlLibSelect.Location = new System.Drawing.Point(17, 16);
-            this.pnlLibSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlLibSelect.Location = new System.Drawing.Point(13, 13);
             this.pnlLibSelect.Name = "pnlLibSelect";
-            this.pnlLibSelect.Size = new System.Drawing.Size(803, 473);
+            this.pnlLibSelect.Size = new System.Drawing.Size(602, 384);
             this.pnlLibSelect.TabIndex = 7;
             // 
-            // btnLibNext
+            // tbLibFile
             // 
-            this.btnLibNext.Location = new System.Drawing.Point(699, 441);
-            this.btnLibNext.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnLibNext.Name = "btnLibNext";
-            this.btnLibNext.Size = new System.Drawing.Size(100, 28);
-            this.btnLibNext.TabIndex = 2;
-            this.btnLibNext.Text = "Next";
-            this.btnLibNext.UseVisualStyleBackColor = true;
-            this.btnLibNext.Click += new System.EventHandler(this.btnLibNext_Click);
+            this.tbLibFile.Location = new System.Drawing.Point(143, 158);
+            this.tbLibFile.Name = "tbLibFile";
+            this.tbLibFile.Size = new System.Drawing.Size(305, 20);
+            this.tbLibFile.TabIndex = 0;
+            this.tbLibFile.Text = "C:\\";
             // 
             // btnLibBrowse
             // 
-            this.btnLibBrowse.Location = new System.Drawing.Point(497, 230);
-            this.btnLibBrowse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLibBrowse.Location = new System.Drawing.Point(373, 187);
             this.btnLibBrowse.Name = "btnLibBrowse";
-            this.btnLibBrowse.Size = new System.Drawing.Size(100, 28);
+            this.btnLibBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnLibBrowse.TabIndex = 1;
             this.btnLibBrowse.Text = "Browse...";
             this.btnLibBrowse.UseVisualStyleBackColor = true;
             this.btnLibBrowse.Click += new System.EventHandler(this.btnLibBrowse_Click);
             // 
-            // tbLibFile
+            // btnLibNext
             // 
-            this.tbLibFile.Location = new System.Drawing.Point(191, 194);
-            this.tbLibFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tbLibFile.Name = "tbLibFile";
-            this.tbLibFile.Size = new System.Drawing.Size(405, 22);
-            this.tbLibFile.TabIndex = 0;
-            this.tbLibFile.Text = "C:\\";
+            this.btnLibNext.Location = new System.Drawing.Point(524, 358);
+            this.btnLibNext.Name = "btnLibNext";
+            this.btnLibNext.Size = new System.Drawing.Size(75, 23);
+            this.btnLibNext.TabIndex = 2;
+            this.btnLibNext.Text = "Next";
+            this.btnLibNext.UseVisualStyleBackColor = true;
+            this.btnLibNext.Click += new System.EventHandler(this.btnLibNext_Click);
             // 
             // FileSelector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 503);
+            this.ClientSize = new System.Drawing.Size(627, 409);
             this.Controls.Add(this.pnlLibSelect);
             this.Controls.Add(this.pnlFileSelect);
             this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
