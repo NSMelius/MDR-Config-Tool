@@ -22,18 +22,18 @@ namespace MDRConfigTool
 {
     public class SolutionHandler
     {
-        public static ITcSysManager11 sysMan;
-        public static EnvDTE.DTE dte;
-        public static EnvDTE.Project pro;
-        public static EnvDTE.Solution sol;
-        public static EnvDTE80.DTE2 errDte;
-        public static TcAdsClient adsClient;
-        public static string declarations;
-        public string error;
-        public bool s;
-        public bool f;
-        public int result;
-
+        private ITcSysManager11 sysMan;
+        private EnvDTE.DTE dte;
+        private EnvDTE.Project pro;
+        private EnvDTE.Solution sol;
+        private EnvDTE80.DTE2 errDte;
+        private TcAdsClient adsClient;
+        private string declarations;
+        private string error;
+        private bool s;
+        private bool f;
+        private int result;
+        private string sSolutionPath = @"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\TwinCATProject\TwinCATProject.sln";
 
 
 
@@ -46,7 +46,7 @@ namespace MDRConfigTool
 
             MessageFilter.Register();
 
-            dte = attachToExistingDte(@"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\TwinCATProject\TwinCATProject.sln", "VisualStudio.DTE.12.0");
+            dte = //attachToExistingDte(sSolutionPath, "VisualStudio.DTE.12.0");
             dte.SuppressUI = false;
             dte.UserControl = true;
             dte.MainWindow.Visible = true;
@@ -58,25 +58,11 @@ namespace MDRConfigTool
 
             //---Navigate to References node and cast to Library Manager interface
             ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
-            ITcPlcLibraryManager libraryManager = (ITcPlcLibraryManager)references;
+            ITcPlcLibraryManager libraryManager = (ITcPlcLibraryManager)this.RetrieveLibMan();
 
-            /* ------------------------------------------------------
-             * Checks to make sure library doesn't already exist, otherwise the insert and repository creation will fail.
-             * This is the reason for removing and deleting first. If the library doesn't exist already, the code gets ignored.
-             * Library must be saved to the C:\\TwinCAT folder!!!
-             * ------------------------------------------------------ */
 
-            foreach (ITcPlcLibRef libraryReference in libraryManager.References)
-            {
-                if (libraryReference is ITcPlcLibrary)
-                {
-                    ITcPlcLibrary library = (ITcPlcLibrary)libraryReference;
-                    if (library.Name == "MDR_Control")
-                    {
-                        DeleteLibrary(ref libraryManager);
-                    }
-                }
-            }
+
+          
             /* ------------------------------------------------------
              * Add our MDR library to the project References.
              * ------------------------------------------------------ */
@@ -96,6 +82,11 @@ namespace MDRConfigTool
             Application.Run(new FileSelector());
 
             MessageFilter.Revoke();
+        }
+
+        public SolutionHandler(string filePath): this()
+        {
+            sSolutionPath = filePath;
         }
 
         public void PLCdeclarations(DataTable dt)
@@ -158,8 +149,24 @@ END_VAR";
 
         }
 
-        public static void AddLibrary(ref ITcPlcLibraryManager libraryManager)
+        public void AddLibrary(ref ITcPlcLibraryManager libraryManager)
         {
+            /* ------------------------------------------------------
+            * Checks to make sure library doesn't already exist, otherwise the insert and repository creation will fail.
+            * This is the reason for removing and deleting first. If the library doesn't exist already, the code gets ignored.
+            * Library must be saved to the C:\\TwinCAT folder!!!
+            * ------------------------------------------------------ */
+            foreach (ITcPlcLibRef libraryReference in libraryManager.References)
+            {
+                if (libraryReference is ITcPlcLibrary)
+                {
+                    ITcPlcLibrary library = (ITcPlcLibrary)libraryReference;
+                    if (library.Name == "MDR_Control")
+                    {
+                        DeleteLibrary(ref libraryManager);
+                    }
+                }
+            }
             //---Create new repo path
             string newRepoPath = @"C:\MDR_Library_Repo";
 
@@ -167,14 +174,16 @@ END_VAR";
             Directory.CreateDirectory(newRepoPath);
             libraryManager.InsertRepository("MDR_Repo", newRepoPath, 0);
 
+            string libPath = buildPathString("MDR_Contrl.library");
+
             //---Install library into new repository
-            libraryManager.InstallLibrary("MDR_Repo", @"C:\TwinCAT\MDR_Control.library", true); //--library must exists in TwinCAT folder.
+            libraryManager.InstallLibrary("MDR_Repo", libPath, true); //--library must exists in TwinCAT folder.
 
             //---Add library from repository
-            libraryManager.AddLibrary("MDR_Control", "0.4", "BAUS");
+            libraryManager.AddLibrary("MDR_Control", "1.0", "BAUS");
         }
 
-        public static void DeleteLibrary(ref ITcPlcLibraryManager libraryManager)
+        public void DeleteLibrary(ref ITcPlcLibraryManager libraryManager)
         {
             //---Create new repo path
             string newRepoPath = @"C:\MDR_Library_Repo";
@@ -190,7 +199,7 @@ END_VAR";
             Directory.Delete(newRepoPath, true);
         }
 
-        public static void linkVariables()
+        public void linkVariables()
         {
             /* ------------------------------------------------------
             * Create variable mapping between I/Os and PLC inputs/outputs
@@ -211,7 +220,7 @@ END_VAR";
             //Control_3 . MAIN.fbMDR_2.stOutput . PlcTask Outputs . Untitled1 Instance . Untitled1
         }
 
-        public static void activateAndRunPLC()
+        public void activateAndRunPLC()
         {
             adsClient = new TcAdsClient();
             adsClient.Connect("192.168.56.1.1.1", 10000); //AMS net id of target system. TwinCAT system service port = 10000
@@ -238,7 +247,7 @@ END_VAR";
                 Debug.WriteLine(ex.Message);
             }
         }
-        public static EnvDTE.DTE attachToExistingDte(string solutionPath, string progId)
+        public  EnvDTE.DTE attachToExistingDte(string solutionPath, string progId)
         {
             EnvDTE.DTE dte = null;
             try
@@ -378,9 +387,8 @@ END_VAR";
         public void EditParams(ITcSmTreeItem drive, string filename)
         {
             //Create the filepath to the motor file using the path provided to load the excel spreadsheet.
-            string file = filename, sFileRegex = @"(^[\w,\s].{1}[A-za-z]{3}";
-            string path = Application.OpenForms["FileSelector"].Controls["tvAmsNetId"].Text;
-            Regex.Replace(path, sFileRegex, file);
+            string file = filename;
+            string path = buildPathString(file);
 
             //open the Motor file as an xml document,read its tags with InitCmds
             XmlDocument xDoc = new XmlDocument();
@@ -388,13 +396,33 @@ END_VAR";
             XmlNode xNode = xDoc.SelectSingleNode("InitCmds");
 
             string driveParams = drive.ProduceXml();
-            string newStartListParam = "<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
-            int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
-            idx = idx + 10;
-            driveParams = driveParams.Insert(idx, newStartListParam);
+            XmlNodeList xmlInitCmds = xNode.ChildNodes;
+            foreach (XmlNode Cmd in xmlInitCmds)
+            {
+                string newStartListParam = Cmd.ToString();//"<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
+                int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
+                idx = idx + 10;
+                driveParams = driveParams.Insert(idx, newStartListParam);
+            }
             drive.ConsumeXml(driveParams);
 
         }//EditParams
+
+    public string buildPathString(string file)
+        {
+            
+            string path = Application.OpenForms["FileSelector"].Controls["tbFilePath"].Text;
+            path += file;
+
+            return path;
+        }
+
+
+    public ITcSmTreeItem RetrieveLibMan()
+        {
+            ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
+            return references;
+        }
     }//class
 
   
