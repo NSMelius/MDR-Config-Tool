@@ -66,6 +66,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="SolutionHandler.cs" />
     <Compile Include="MessageFilter.cs" />
+    <Compile Include="MotorConfigurator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FileSelector.resx">

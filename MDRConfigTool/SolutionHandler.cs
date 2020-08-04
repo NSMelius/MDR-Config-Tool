@@ -56,7 +56,7 @@ namespace MDRConfigTool
             plc.CreateChild("Untitled1", 0, "", "Standard PLC Template");
             //---Navigate to References node and cast to Library Manager interface
             ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
-            ITcPlcLibraryManager libraryManager = (ITcPlcLibraryManager)references;
+            ITcPlcLibraryManager libraryManager = (ITcPlcLibraryManager)this.RetrieveLibMan();
 
             /* ------------------------------------------------------
              * Check to see if library already exists, if it does it will delete before adding to avoid any exceptions.
@@ -116,6 +116,11 @@ namespace MDRConfigTool
 
         }
 
+        public SolutionHandler(string filePath): this()
+        {
+            sSolutionPath = filePath;
+        }
+
         public void PLCdeclarations(DataTable dt)
         {
 
@@ -142,7 +147,7 @@ END_VAR";
             int i = 0;
 
 
-            for (i = 0; i < dt.Rows.Count -1; i++)
+            for (i = 0; i < dt.Rows.Count - 1; i++)
             {
                 boxName[i] = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
                 Console.WriteLine(boxName[i]);
@@ -157,8 +162,7 @@ END_VAR";
             settings.SilentMode = true;
             dte.Solution.SolutionBuild.Build(true); // compile the plc project
             settings.SilentMode = false;
-
-    }
+        }
 
     public static void AddLibrary(ref ITcPlcLibraryManager libraryManager)
         {
@@ -173,15 +177,18 @@ END_VAR";
             Directory.CreateDirectory(newRepoPath);
             
             libraryManager.InsertRepository("MDR_Repo", newRepoPath, 0);
-          
+
+            string libPath = buildPathString("MDR_Control.library");
+
             //---Install library into new repository
-            libraryManager.InstallLibrary("MDR_Repo", @"C:\TwinCAT\MDR_Control.library", true); //--library must exists in TwinCAT folder.
+            libraryManager.InstallLibrary("MDR_Repo", libPath, true); //--library must exists in TwinCAT folder.
+            //--- libpath needs to be added to basefolder in this install command (needs full path to folder + MDR_Control.library
 
             //---Add library from repository
-            libraryManager.AddLibrary("MDR_Control", "0.4", "BAUS");
+            libraryManager.AddLibrary("MDR_Control", "1.0", "BAUS");
         }
 
-        public static void DeleteLibrary(ref ITcPlcLibraryManager libraryManager)
+        public void DeleteLibrary(ref ITcPlcLibraryManager libraryManager)
         {
             //---Create new repo path
             string newRepoPath = @"C:\MDR_Library_Repo";
@@ -199,21 +206,21 @@ END_VAR";
 
         public void linkVariables(DataTable dt)
         {
-
             string[] boxName = new string[dt.Rows.Count];
             int j = 0;
             int i = 0;
             string plcInputsPath = "TIPC^Untitled1^Untitled1 Instance^PlcTask Inputs";
             string plcOutputsPath = "TIPC^Untitled1^Untitled1 Instance^PlcTask Outputs";
 
-            for (i = 0; i < dt.Rows.Count-1; i++)
+            for (i = 0; i < dt.Rows.Count - 1; i++)
             {
                 boxName[i] = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
-                if (i >= 1) {
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i-1] + ".stInput^Control_3", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_3");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i-1] + ".stInput^Control_4", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_4");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_1", plcOutputsPath + "^MAIN." + boxName[i-1] + ".stOutput^Control_1");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_2", plcOutputsPath + "^MAIN." + boxName[i-1] + ".stOutput^Control_2");
+                if (i >= 1)
+                {
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^Control_3", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_3");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^Control_4", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_4");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_1", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^Control_1");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_2", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^Control_2");
                 }
 
 
@@ -221,13 +228,13 @@ END_VAR";
                 j++;
             }
 
-            
 
-       
+
+
 
         }
 
-        public static void activateAndRunPLC()
+        public void activateAndRunPLC()
         {
             adsClient = new TcAdsClient();
             adsClient.Connect("192.168.56.1.1.1", 10000); //AMS net id of target system. TwinCAT system service port = 10000
@@ -254,7 +261,7 @@ END_VAR";
                 Debug.WriteLine(ex.Message);
             }
         }
-        public static EnvDTE.DTE attachToExistingDte(string solutionPath, string progId)
+        public  EnvDTE.DTE attachToExistingDte(string solutionPath, string progId)
         {
             EnvDTE.DTE dte = null;
             try
@@ -284,19 +291,9 @@ END_VAR";
 
         public void ScanDevicesAndBoxes(DataTable dt)
         {
-            //Start Excel and get Application object.
-            /*oXL = new Microsoft.Office.Interop.Excel.Application();
-            oXL.Visible = true;
-
-            //Get a new workbook.
-            oWB = (Microsoft.Office.Interop.Excel._Workbook)(oXL.Workbooks.Add());
-            oSheet = (Microsoft.Office.Interop.Excel._Worksheet)oWB.ActiveSheet;
-            */
-
-
-            // sysMan.SetTargetNetId("1.2.3.4.5.6"); // Setting of the target NetId.
+        
             ITcSmTreeItem ioDevicesItem = sysMan.LookupTreeItem("TIID"); // Get The IO Devices Node
-            
+
             // Scan Devices (Be sure that the target system is in Config mode!)
             string scannedXml = ioDevicesItem.ProduceXml(false); // Produce Xml implicitly starts the ScanDevices on this node.
 
@@ -320,7 +317,7 @@ END_VAR";
                 XmlNode xmlAddress = node.SelectSingleNode("AddressInfo");
 
                 ITcSmTreeItem device = ioDevicesItem.CreateChild(string.Format("Device_{0}", ++deviceCount), itemSubType, string.Empty, null);
-                
+
                 string xml = string.Format("<TreeItem><DeviceDef>{0}</DeviceDef></TreeItem>", xmlAddress.OuterXml);
                 device.ConsumeXml(xml); // Consume Xml Parameters (here the Address of the Device)
                 devices.Add(device);
@@ -346,6 +343,7 @@ END_VAR";
                     //oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
+                        
                         Box.Name = dt.Rows[j].ItemArray[0].ToString()+j.ToString();
                         j++;
                         this.EditParams(Box, dt.Rows[j].ItemArray[2].ToString());
@@ -364,14 +362,6 @@ END_VAR";
                 }
             } //end of foreach loops
 
-            /*oXL.Visible = false;
-            oXL.UserControl = false;
-            oWB.SaveAs(@"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\ErrorOutput\IO_List.xlsx", Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
-                false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
-                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-            oWB.Close();
-            oXL.Quit();*/
         }//ScanDevicesandBoxes()
 
         public void SetNetId()
@@ -394,9 +384,8 @@ END_VAR";
         public void EditParams(ITcSmTreeItem drive, string filename)
         {
             //Create the filepath to the motor file using the path provided to load the excel spreadsheet.
-            string file = filename, sFileRegex = @"(^[\w,\s].{1}[A-za-z]{3}";
-            string path = Application.OpenForms["FileSelector"].Controls["tvAmsNetId"].Text;
-            Regex.Replace(path, sFileRegex, file);
+            string file = filename;
+            string path = buildPathString(file);
 
             //open the Motor file as an xml document,read its tags with InitCmds
             XmlDocument xDoc = new XmlDocument();
@@ -404,15 +393,42 @@ END_VAR";
             XmlNode xNode = xDoc.SelectSingleNode("InitCmds");
 
             string driveParams = drive.ProduceXml();
-            string newStartListParam = "<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
-            int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
-            idx = idx + 10;
-            driveParams = driveParams.Insert(idx, newStartListParam);
+            XmlNodeList xmlInitCmds = xNode.ChildNodes;
+            foreach (XmlNode Cmd in xmlInitCmds)
+            {
+                string newStartListParam = Cmd.ToString();//"<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
+                int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
+                idx = idx + 10;
+                driveParams = driveParams.Insert(idx, newStartListParam);
+            }
             drive.ConsumeXml(driveParams);
 
         }//EditParams
 
+    public string buildPathString(string file)
+        {
+            
+            string path = Application.OpenForms["FileSelector"].Controls["tbFilePath"].Text;
+            path += file;
+
+            return path;
+        }
+
+
+    public ITcSmTreeItem RetrieveLibMan()
+        {
+            ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
+            return references;
+        }
+
+        private bool isLinkingCompatible(ITcSmTreeItem drive)
+        {
+            string driveParams = drive.ProduceXml();
+            int idx = driveParams.LastIndexOf("<Object><Index>#x1009<Index>");
+            
+        }
     }//class
+
 
   
 
