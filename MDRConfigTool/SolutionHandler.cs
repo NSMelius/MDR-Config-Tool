@@ -330,6 +330,7 @@ END_VAR";
                     //oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
+                        
                         Box.Name = dt.Rows[j].ItemArray[0].ToString()+j.ToString();
                         j++;
                         this.EditParams(Box, dt.Rows[j].ItemArray[2].ToString());
@@ -414,7 +415,15 @@ END_VAR";
             ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
             return references;
         }
+
+        private bool isLinkingCompatible(ITcSmTreeItem drive)
+        {
+            string driveParams = drive.ProduceXml();
+            int idx = driveParams.LastIndexOf("<Object><Index>#x1009<Index>");
+            
+        }
     }//class
+
 
   
 
