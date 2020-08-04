@@ -292,9 +292,9 @@
             // pbWelcome
             // 
             this.pbWelcome.Image = ((System.Drawing.Image)(resources.GetObject("pbWelcome.Image")));
-            this.pbWelcome.Location = new System.Drawing.Point(78, 23);
+            this.pbWelcome.Location = new System.Drawing.Point(8, 27);
             this.pbWelcome.Name = "pbWelcome";
-            this.pbWelcome.Size = new System.Drawing.Size(383, 326);
+            this.pbWelcome.Size = new System.Drawing.Size(254, 326);
             this.pbWelcome.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbWelcome.TabIndex = 1;
             this.pbWelcome.TabStop = false;
@@ -314,10 +314,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
-            this.Controls.Add(this.pnlFileSelect);
-            this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
+            this.Controls.Add(this.pnlFileSelect);
+            this.Controls.Add(this.pnlDataDisplay);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
