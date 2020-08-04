@@ -33,37 +33,33 @@ namespace MDRConfigTool
         public bool s;
         public bool f;
         public int result;
-
-
-
-
-
+        public static string BASEFOLDER = @"C:\TwinCATProject";
+        public static string TcTemplatePath = @"C:\TwinCAT\3.1\Components\Base\PrjTemplate\TwinCAT Project.tsproj";
+        public static string _tcProjectName = @"TwinCATProject";
+        public static string _solutionName = @"TwinCATProject";
+        public static string ProgID = "TcXaeShell.DTE.15.0";
 
         public SolutionHandler()
         {
-
-            // Application.Run(new Form1());
-
             MessageFilter.Register();
 
-            dte = attachToExistingDte(@"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\TwinCATProject\TwinCATProject.sln", "VisualStudio.DTE.12.0");
-            dte.SuppressUI = false;
-            dte.UserControl = true;
-            dte.MainWindow.Visible = true;
+            /* -----------------------------------------------------------------
+             * Creates new solution based off of TwinCAT's XAE and PLC templates.
+             * -----------------------------------------------------------------*/ 
+            if (dte == null) CreateNewProject();
 
-            sol = dte.Solution;
             pro = sol.Projects.Item(1);
             sysMan = (ITcSysManager11)pro.Object;
-
-
+           
+            //System.Threading.Thread.Sleep(5000);
+            ITcSmTreeItem plc = sysMan.LookupTreeItem("TIPC");
+            plc.CreateChild("Untitled1", 0, "", "Standard PLC Template");
             //---Navigate to References node and cast to Library Manager interface
             ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
             ITcPlcLibraryManager libraryManager = (ITcPlcLibraryManager)references;
 
             /* ------------------------------------------------------
-             * Checks to make sure library doesn't already exist, otherwise the insert and repository creation will fail.
-             * This is the reason for removing and deleting first. If the library doesn't exist already, the code gets ignored.
-             * Library must be saved to the C:\\TwinCAT folder!!!
+             * Check to see if library already exists, if it does it will delete before adding to avoid any exceptions.
              * ------------------------------------------------------ */
 
             foreach (ITcPlcLibRef libraryReference in libraryManager.References)
@@ -82,10 +78,42 @@ namespace MDRConfigTool
              * ------------------------------------------------------ */
             AddLibrary(ref libraryManager);
 
-
-
-
             MessageFilter.Revoke();
+        }
+
+        public static void CreateNewProject()
+        {
+
+
+            /* ------------------------------------------------------
+             * Create Visual Studio instance and make VS window visible
+             * ------------------------------------------------------ */
+            Type t = System.Type.GetTypeFromProgID(ProgID);
+            dte = (EnvDTE.DTE)System.Activator.CreateInstance(t);
+            dte.SuppressUI = false;
+            dte.UserControl = true; // true = leaves VS window open after code execution
+            dte.MainWindow.Visible = true;
+
+            /* ------------------------------------------------------
+             * Create directories for new Visual Studio solution
+             * ------------------------------------------------------ */
+            Helper.DeleteDirectory(BASEFOLDER);
+            Directory.CreateDirectory(BASEFOLDER);
+            Directory.CreateDirectory(BASEFOLDER + "\\" + _tcProjectName);
+
+            /* ------------------------------------------------------
+             * Create and save new solution
+             * ------------------------------------------------------ */
+            sol = dte.Solution;
+            sol.Create(BASEFOLDER, _solutionName + ".sln");
+            sol.SaveAs(BASEFOLDER + "\\" + _solutionName);
+
+            /* ------------------------------------------------------
+             * Create new TwinCAT project, based on TwinCAT Project file (delivered with TwinCAT XAE)
+             * ------------------------------------------------------ */
+            pro = sol.AddFromTemplate(TcTemplatePath, BASEFOLDER + "\\" + _tcProjectName, _tcProjectName);
+           
+
         }
 
         public void PLCdeclarations(DataTable dt)
@@ -102,12 +130,12 @@ END_VAR";
 
             //Cast to specific interface for declaration and implementation area
             ITcPlcDeclaration mainDecl = (ITcPlcDeclaration)main;
-            ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
+           // ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
 
 
             //Get current declaration and implementation area content
             string strMainDecl = mainDecl.DeclarationText;
-            string strMainImpl = mainImpl.ImplementationText;
+           //string strMainImpl = mainImpl.ImplementationText;
 
             string[] boxName = new string[dt.Rows.Count];
             int j = 0;
@@ -124,6 +152,7 @@ END_VAR";
             declarations = string.Join(": FB_MDR_Control;" + Environment.NewLine, boxName);
             mainDecl.DeclarationText = mainVar + declarations + endMain;
 
+            System.Threading.Thread.Sleep(2000);
             var settings = dte.GetObject("TcAutomationSettings");
             settings.SilentMode = true;
             dte.Solution.SolutionBuild.Build(true); // compile the plc project
@@ -135,11 +164,16 @@ END_VAR";
         {
             //---Create new repo path
             string newRepoPath = @"C:\MDR_Library_Repo";
-
+            string oldRepoPath = @"C:\MDR_Library_Repo\BAUS";
             //---Create new repository and insert into repo path---
+            if (Directory.Exists(oldRepoPath))
+            {
+                libraryManager.RemoveRepository("MDR_Repo");
+            }
             Directory.CreateDirectory(newRepoPath);
+            
             libraryManager.InsertRepository("MDR_Repo", newRepoPath, 0);
-
+          
             //---Install library into new repository
             libraryManager.InstallLibrary("MDR_Repo", @"C:\TwinCAT\MDR_Control.library", true); //--library must exists in TwinCAT folder.
 
