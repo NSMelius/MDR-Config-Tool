@@ -22,71 +22,103 @@ namespace MDRConfigTool
 {
     public class SolutionHandler
     {
-        private ITcSysManager11 sysMan;
-        private EnvDTE.DTE dte;
-        private EnvDTE.Project pro;
-        private EnvDTE.Solution sol;
-        private EnvDTE80.DTE2 errDte;
-        private TcAdsClient adsClient;
-        private string declarations;
-        private string error;
-        private bool s;
-        private bool f;
-        private int result;
-        private string sSolutionPath = @"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\TwinCATProject\TwinCATProject.sln";
-
-
-
-
+        public  ITcSysManager11 sysMan;
+        public  EnvDTE.DTE dte;
+        public  EnvDTE.Project pro;
+        public  EnvDTE.Solution sol;
+        public  EnvDTE80.DTE2 errDte;
+        public  TcAdsClient adsClient;
+        public  string declarations;
+        public string error;
+        public bool s;
+        public bool f;
+        public int result;
+        public  string BASEFOLDER = @"C:\TwinCATProject";
+        public  string TcTemplatePath = @"C:\TwinCAT\3.1\Components\Base\PrjTemplate\TwinCAT Project.tsproj";
+        public  string _tcProjectName = @"TwinCATProject";
+        public  string _solutionName = @"TwinCATProject";
+        public  string ProgID = "TcXaeShell.DTE.15.0";
 
         public SolutionHandler()
         {
-
-            // Application.Run(new Form1());
-
             MessageFilter.Register();
 
-            dte = attachToExistingDte(sSolutionPath, "VisualStudio.DTE.12.0");
-            dte.SuppressUI = false;
-            dte.UserControl = true;
-            dte.MainWindow.Visible = true;
+            /* -----------------------------------------------------------------
+             * Creates new solution based off of TwinCAT's XAE and PLC templates.
+             * -----------------------------------------------------------------*/ 
+            if (dte == null) CreateNewProject();
 
-            sol = dte.Solution;
             pro = sol.Projects.Item(1);
             sysMan = (ITcSysManager11)pro.Object;
-
-
+           
+            //System.Threading.Thread.Sleep(5000);
+            ITcSmTreeItem plc = sysMan.LookupTreeItem("TIPC");
+            plc.CreateChild("Untitled1", 0, "", "Standard PLC Template");
             //---Navigate to References node and cast to Library Manager interface
             ITcSmTreeItem references = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^References");
             ITcPlcLibraryManager libraryManager = (ITcPlcLibraryManager)this.RetrieveLibMan();
 
+            /* ------------------------------------------------------
+             * Check to see if library already exists, if it does it will delete before adding to avoid any exceptions.
+             * ------------------------------------------------------ */
 
-
-          
+            foreach (ITcPlcLibRef libraryReference in libraryManager.References)
+            {
+                if (libraryReference is ITcPlcLibrary)
+                {
+                    ITcPlcLibrary library = (ITcPlcLibrary)libraryReference;
+                    if (library.Name == "MDR_Control")
+                    {
+                        DeleteLibrary(ref libraryManager);
+                    }
+                }
+            }
             /* ------------------------------------------------------
              * Add our MDR library to the project References.
              * ------------------------------------------------------ */
             AddLibrary(ref libraryManager);
 
+            MessageFilter.Revoke();
+        }
+
+        public void CreateNewProject()
+        {
+
 
             /* ------------------------------------------------------
-             * Adding our PLC code
+             * Create Visual Studio instance and make VS window visible
              * ------------------------------------------------------ */
+            Type t = System.Type.GetTypeFromProgID(ProgID);
+            dte = (EnvDTE.DTE)System.Activator.CreateInstance(t);
+            dte.SuppressUI = false;
+            dte.UserControl = true; // true = leaves VS window open after code execution
+            dte.MainWindow.Visible = true;
 
-            //PLCdeclarations();
+            /* ------------------------------------------------------
+             * Create directories for new Visual Studio solution
+             * ------------------------------------------------------ */
+            Helper.DeleteDirectory(BASEFOLDER);
+            Directory.CreateDirectory(BASEFOLDER);
+            Directory.CreateDirectory(BASEFOLDER + "\\" + _tcProjectName);
 
-            //  linkVariables();
+            /* ------------------------------------------------------
+             * Create and save new solution
+             * ------------------------------------------------------ */
+            sol = dte.Solution;
+            sol.Create(BASEFOLDER, _solutionName + ".sln");
+            sol.SaveAs(BASEFOLDER + "\\" + _solutionName);
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FileSelector());
+            /* ------------------------------------------------------
+             * Create new TwinCAT project, based on TwinCAT Project file (delivered with TwinCAT XAE)
+             * ------------------------------------------------------ */
+            pro = sol.AddFromTemplate(TcTemplatePath, BASEFOLDER + "\\" + _tcProjectName, _tcProjectName);
+           
 
-            MessageFilter.Revoke();
         }
 
         public SolutionHandler(string filePath): this()
         {
-            sSolutionPath = filePath;
+            BASEFOLDER = filePath;
         }
 
         public void PLCdeclarations(DataTable dt)
@@ -103,12 +135,12 @@ END_VAR";
 
             //Cast to specific interface for declaration and implementation area
             ITcPlcDeclaration mainDecl = (ITcPlcDeclaration)main;
-            ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
+           // ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
 
 
             //Get current declaration and implementation area content
             string strMainDecl = mainDecl.DeclarationText;
-            string strMainImpl = mainImpl.ImplementationText;
+           //string strMainImpl = mainImpl.ImplementationText;
 
             string[] boxName = new string[dt.Rows.Count];
             int j = 0;
@@ -125,41 +157,32 @@ END_VAR";
             declarations = string.Join(": FB_MDR_Control;" + Environment.NewLine, boxName);
             mainDecl.DeclarationText = mainVar + declarations + endMain;
 
+            System.Threading.Thread.Sleep(2000);
             var settings = dte.GetObject("TcAutomationSettings");
             settings.SilentMode = true;
             dte.Solution.SolutionBuild.Build(true); // compile the plc project
             settings.SilentMode = false;
         }
 
-        public void AddLibrary(ref ITcPlcLibraryManager libraryManager)
+    public  void AddLibrary(ref ITcPlcLibraryManager libraryManager)
         {
-            /* ------------------------------------------------------
-            * Checks to make sure library doesn't already exist, otherwise the insert and repository creation will fail.
-            * This is the reason for removing and deleting first. If the library doesn't exist already, the code gets ignored.
-            * Library must be saved to the C:\\TwinCAT folder!!!
-            * ------------------------------------------------------ */
-            foreach (ITcPlcLibRef libraryReference in libraryManager.References)
-            {
-                if (libraryReference is ITcPlcLibrary)
-                {
-                    ITcPlcLibrary library = (ITcPlcLibrary)libraryReference;
-                    if (library.Name == "MDR_Control")
-                    {
-                        DeleteLibrary(ref libraryManager);
-                    }
-                }
-            }
             //---Create new repo path
             string newRepoPath = @"C:\MDR_Library_Repo";
-
+            string oldRepoPath = @"C:\MDR_Library_Repo\BAUS";
             //---Create new repository and insert into repo path---
+            if (Directory.Exists(oldRepoPath))
+            {
+                libraryManager.RemoveRepository("MDR_Repo");
+            }
             Directory.CreateDirectory(newRepoPath);
+            
             libraryManager.InsertRepository("MDR_Repo", newRepoPath, 0);
 
-            string libPath = buildPathString("MDR_Contrl.library");
+            string libPath = buildPathString("MDR_Control.library");
 
             //---Install library into new repository
             libraryManager.InstallLibrary("MDR_Repo", libPath, true); //--library must exists in TwinCAT folder.
+            //--- libpath needs to be added to basefolder in this install command (needs full path to folder + MDR_Control.library
 
             //---Add library from repository
             libraryManager.AddLibrary("MDR_Control", "1.0", "BAUS");
@@ -268,17 +291,7 @@ END_VAR";
 
         public void ScanDevicesAndBoxes(DataTable dt)
         {
-            //Start Excel and get Application object.
-            /*oXL = new Microsoft.Office.Interop.Excel.Application();
-            oXL.Visible = true;
-
-            //Get a new workbook.
-            oWB = (Microsoft.Office.Interop.Excel._Workbook)(oXL.Workbooks.Add());
-            oSheet = (Microsoft.Office.Interop.Excel._Worksheet)oWB.ActiveSheet;
-            */
-
-
-            // sysMan.SetTargetNetId("1.2.3.4.5.6"); // Setting of the target NetId.
+        
             ITcSmTreeItem ioDevicesItem = sysMan.LookupTreeItem("TIID"); // Get The IO Devices Node
 
             // Scan Devices (Be sure that the target system is in Config mode!)
@@ -349,14 +362,6 @@ END_VAR";
                 }
             } //end of foreach loops
 
-            /*oXL.Visible = false;
-            oXL.UserControl = false;
-            oWB.SaveAs(@"C:\Users\CharlesZ\Desktop\CZ_Support\Support Resources\ADS\ErrorOutput\IO_List.xlsx", Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
-                false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
-                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-            oWB.Close();
-            oXL.Quit();*/
         }//ScanDevicesandBoxes()
 
         public void SetNetId()

@@ -16,7 +16,7 @@ namespace MDRConfigTool
         ExcelHandler fileReader;
         Timer timer = new Timer();
         SolutionHandler solHandler;
-        private static int count = 0;
+        private  int count = 0;
         private DataTable DT;
         public FileSelector()
         {
@@ -94,7 +94,7 @@ namespace MDRConfigTool
 
         private void btnLibNext_Click(object sender, EventArgs e)
         {
-         solHandler.
+            solHandler.AddLibrary()
         }
     }
 }
