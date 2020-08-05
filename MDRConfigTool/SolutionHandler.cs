@@ -33,15 +33,18 @@ namespace MDRConfigTool
         private bool s;
         private bool f;
         private int result;
-        private  string BASEFOLDER = @"C:\TwinCATProject";
+        private  string BASEFOLDER;
         private  string TcTemplatePath = @"C:\TwinCAT\3.1\Components\Base\PrjTemplate\TwinCAT Project.tsproj";
-        private string _SolutionName = @"TwinCATProject";
-        private string _TcProjectName = @"TwinCATProject";
+        private string _solutionName;
+        private string _tcProjectName;
         
         private  string ProgID = "TcXaeShell.DTE.15.0";
 
-        public SolutionHandler()
+        public SolutionHandler(string filePath, string FileName)
         {
+            this.BASEFOLDER = filePath;
+            this._solutionName = _tcProjectName = FileName;
+
             MessageFilter.Register();
 
             /* -----------------------------------------------------------------
@@ -81,12 +84,8 @@ namespace MDRConfigTool
 
             MessageFilter.Revoke();
         }//Constructor()
-        public SolutionHandler(string filePath, string FileName) : this()
-        {
-            BASEFOLDER = filePath;
-            _SolutionName = _TcProjectName = FileName;
+  
 
-        }
         public void CreateNewProject()
         {
 
@@ -103,7 +102,7 @@ namespace MDRConfigTool
             /* ------------------------------------------------------
              * Create directories for new Visual Studio solution
              * ------------------------------------------------------ */
-            Helper.DeleteDirectory(BASEFOLDER);
+            //Helper.DeleteDirectory(BASEFOLDER);
             Directory.CreateDirectory(BASEFOLDER);
             Directory.CreateDirectory(BASEFOLDER);
 
@@ -170,8 +169,8 @@ END_VAR";
     public  void AddLibrary(ref ITcPlcLibraryManager libraryManager)
         {
             //---Create new repo path
-            string newRepoPath = @"C:\MDR_Library_Repo";
-            string oldRepoPath = @"C:\MDR_Library_Repo\BAUS";
+            string newRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries";
+            string oldRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries\BAUS";
             //---Create new repository and insert into repo path---
             if (Directory.Exists(oldRepoPath))
             {
@@ -307,7 +306,6 @@ END_VAR";
             
             //local variables for our spreadsheet writing statements
             int deviceCount = 0;
-            string term = "Term";
             bool bTerm;
             int i = 2;
 
@@ -367,12 +365,12 @@ END_VAR";
 
         }//ScanDevicesandBoxes()
 
-        public void SetNetId()
+        public void SetNetId(string NetId)
         {
             //finding the open form so we can get the textbox value
-            TextBox t = Application.OpenForms["FileSelector"].Controls["tbAmsNetId"] as TextBox;
+            
             //sets the target to the textbox value.
-            sysMan.SetTargetNetId(t.Text);
+            sysMan.SetTargetNetId(NetId);
         }//SetNetId()
 
         public void ActivateConfiguration()
@@ -393,7 +391,7 @@ END_VAR";
             //open the Motor file as an xml document,read its tags with InitCmds
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(path);
-            XmlNode xNode = xDoc.SelectSingleNode("InitCmds");
+            XmlNode xNode = xDoc.SelectSingleNode("/Mailbox/CoE/InitCmds");
 
             string driveParams = drive.ProduceXml();
             XmlNodeList xmlInitCmds = xNode.ChildNodes;
@@ -411,8 +409,8 @@ END_VAR";
     public string buildPathString(string file)
         {
             
-            string path = Application.OpenForms["FileSelector"].Controls["tbFilePath"].Text;
-            path += file;
+            string path = BASEFOLDER;
+            path += "\\" + file;
 
             return path;
         }
@@ -426,9 +424,29 @@ END_VAR";
 
         private bool isLinkingCompatible(ITcSmTreeItem drive)
         {
+            /*--------------------------------
+             * Check the that the passed drive has a hardware version newer than the beta version
+             * make sure that we can read the revision version of the drive through its xml file
+             * find the index of the xml node for the CoE parameter for Hardwareversion 16#1009
+             * Check if the value of that node is of Hardware version 01(?) or higher.
+             * THe last beta revision number is 1114169
+             * -------------------------------*/
+
+            ulong lastBeta = 1114169;
             string driveParams = drive.ProduceXml();
-            int idx = driveParams.LastIndexOf("<Object><Index>#x1009<Index>");
+            int idxStart = driveParams.LastIndexOf("<RevisionNo>"), idxEnd = driveParams.IndexOf("</RevisionNo>");
+            ulong revisionNo; ulong.TryParse(driveParams.Substring(idxStart, (idxEnd - idxStart)),out revisionNo);
+
+            if(revisionNo > lastBeta)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
             
+
         }
     }//class
 

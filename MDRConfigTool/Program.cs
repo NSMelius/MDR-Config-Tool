@@ -25,9 +25,11 @@ namespace MDRConfigTool
         [STAThread]
         public static void Main(string[] args)
         {
+            
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);           
-            Application.Run(new FileSelector());
+            Application.SetCompatibleTextRenderingDefault(false);
+            FileSelector fSelect = new FileSelector();
+            Application.Run(fSelect);
            
 
             

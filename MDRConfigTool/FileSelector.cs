@@ -25,10 +25,22 @@ namespace MDRConfigTool
             
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            ofd = new OpenFileDialog();
+
+            pnlWelcome.Visible = false;
+            pnlFileSelect.Visible = true;
+        }//btnOpenSolution_Click()
+
+        private void FolderBrowse_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                tbFilePath.Text = fbd.SelectedPath;
+            }
+            /*
+            OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Select I/O Spreadsheet File";
             ofd.InitialDirectory = @"C:\";
             ofd.Filter = "All Files(*.*)|*.*|Excel Spreadsheets (*.xls,*.xlsm, *.xlsx)|*.xls;*.xlsm;*.xlsx| Text File (*.txt, *.csv)|*.txt;*.csv";
@@ -39,59 +51,82 @@ namespace MDRConfigTool
             {
                 tbFilePath.Text = ofd.FileName;
             }
-            
-        }
+            */
 
-        private void btnOPenFile_Click(object sender, EventArgs e)
+        }//FolderBrowse_Click()
+
+        private void btnBrowseFile_Click(object sender, EventArgs e)
         {
-            fileReader = new ExcelHandler(tbFilePath.Text);
-            DT = fileReader.RetrieveData();
-            pnlFileSelect.Visible = false;
-            pnlDataDisplay.Visible = true;
-            dgvListDisplay.DataSource = DT;
-
-
-        }
-
-        private void btnTableOK_Click(object sender, EventArgs e)
-        {
-            solHandler.ScanDevicesAndBoxes(DT);
-            pnlDataDisplay.Visible = false;
-            pnlSolutionsettings.Visible = true;
-        }
-
-        private void btnOpenSolution_Click(object sender, EventArgs e)
-        {
-            
-            solHandler.SetNetId();
-            
-            solHandler.ActivateConfiguration();
-            pnlSolutionsettings.Visible = false;
-            pnlFileSelect.Visible = true;
-
-        }
-
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            solHandler = new SolutionHandler();
-            pnlWelcome.Visible = false;
-            pnlSolutionsettings.Visible = true;
-        }
-
-        private void btnLibBrowse_Click(object sender, EventArgs e)
-        {
-            ofd = new OpenFileDialog();
-            ofd.Title = "Select MDR control library ";
-            ofd.Filter = "All Files (*.*)|*.*| Library file(*.library, *.compiled-library)|*.library;*.compiled-library";
-            ofd.FilterIndex = 1;
+            string file;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select I/O Spreadsheet File";
+            ofd.InitialDirectory = tbFilePath.Text;
+            ofd.Filter = "All Files(*.*)|*.*|Excel Spreadsheets (*.xls,*.xlsm, *.xlsx)|*.xls;*.xlsm;*.xlsx| Text File (*.txt, *.csv)|*.txt;*.csv";
+            ofd.FilterIndex = 2;
             ofd.RestoreDirectory = true;
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                tbLibFile.Text = ofd.FileName;
+                file = ofd.FileName;
+                int idx = file.LastIndexOf('\\');
+                file = file.Substring(idx + 1);
+                tbFileName.Text = file;
             }
-        }
 
- 
+
+        }//btnBrowseFile_Click()
+
+        private void btnOPenFile_Click(object sender, EventArgs e)
+        {
+            
+            string sFilePath = tbFilePath.Text + @"\" + tbFileName.Text;
+            if (!String.IsNullOrEmpty(tbProjectName.Text) && !String.IsNullOrEmpty(tbFileName.Text))
+            {
+
+                fileReader = new ExcelHandler(sFilePath);
+                DT = fileReader.RetrieveData();
+                fileReader.closeFile();
+
+             
+                solHandler = new SolutionHandler(tbFilePath.Text, tbProjectName.Text);
+
+
+                pnlFileSelect.Visible = false; 
+                dgvListDisplay.DataSource = DT;
+                pnlDataDisplay.Visible = true;
+            }
+            else { MessageBox.Show("Please Enter a Project Name and/or File Name"); }
+
+        }//btnOpenFile_Click
+
+        private void btnTableOK_Click(object sender, EventArgs e)
+        {
+
+            pnlDataDisplay.Visible = false;
+            pnlSolutionsettings.Visible = true;
+
+        }//btnTableOK_Click
+
+
+        private void btnOpenSolution_Click(object sender, EventArgs e)
+        {
+            
+            solHandler.SetNetId(tbAmsNetId.Text);
+            //solHandler.ScanDevicesAndBoxes(DT);
+            solHandler.PLCdeclarations(DT);
+            solHandler.linkVariables(DT);
+            //solHandler.ActivateConfiguration();
+
+            pnlSolutionsettings.Visible = false;
+
+        }//btnOpenSolution_Click()
+
+   
+
+
+
+
+
+
     }
 }

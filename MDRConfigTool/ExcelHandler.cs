@@ -83,7 +83,7 @@ namespace MDRConfigTool
             DataRow row;
             object[,] data = range.Value2;
             for(int j = 1; j <= cCount;j++)
-            for (int i = 1; i <= rCount; i++)
+            for (int i = 1; i < rCount; i++)
             {
                 string CellVal = String.Empty;
                 try
@@ -172,5 +172,9 @@ namespace MDRConfigTool
             }//try/catch
         }
         
+        public void closeFile()
+        {
+            this._app.Quit();
+        }
     }//Class
 }//namespace
