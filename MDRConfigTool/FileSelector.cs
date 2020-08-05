@@ -92,9 +92,6 @@ namespace MDRConfigTool
             }
         }
 
-        private void btnLibNext_Click(object sender, EventArgs e)
-        {
-            solHandler.AddLibrary()
-        }
+ 
     }
 }

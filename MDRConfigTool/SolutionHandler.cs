@@ -22,22 +22,23 @@ namespace MDRConfigTool
 {
     public class SolutionHandler
     {
-        public  ITcSysManager11 sysMan;
-        public  EnvDTE.DTE dte;
-        public  EnvDTE.Project pro;
-        public  EnvDTE.Solution sol;
-        public  EnvDTE80.DTE2 errDte;
-        public  TcAdsClient adsClient;
-        public  string declarations;
-        public string error;
-        public bool s;
-        public bool f;
-        public int result;
-        public  string BASEFOLDER = @"C:\TwinCATProject";
-        public  string TcTemplatePath = @"C:\TwinCAT\3.1\Components\Base\PrjTemplate\TwinCAT Project.tsproj";
-        public  string _tcProjectName = @"TwinCATProject";
-        public  string _solutionName = @"TwinCATProject";
-        public  string ProgID = "TcXaeShell.DTE.15.0";
+        private  ITcSysManager11 sysMan;
+        private  EnvDTE.DTE dte;
+        private  EnvDTE.Project pro;
+        private  EnvDTE.Solution sol;
+        private  EnvDTE80.DTE2 errDte;
+        private  TcAdsClient adsClient;
+        private  string declarations;
+        private string error;
+        private bool s;
+        private bool f;
+        private int result;
+        private  string BASEFOLDER = @"C:\TwinCATProject";
+        private  string TcTemplatePath = @"C:\TwinCAT\3.1\Components\Base\PrjTemplate\TwinCAT Project.tsproj";
+        private string _SolutionName = @"TwinCATProject";
+        private string _TcProjectName = @"TwinCATProject";
+        
+        private  string ProgID = "TcXaeShell.DTE.15.0";
 
         public SolutionHandler()
         {
@@ -79,8 +80,13 @@ namespace MDRConfigTool
             AddLibrary(ref libraryManager);
 
             MessageFilter.Revoke();
-        }
+        }//Constructor()
+        public SolutionHandler(string filePath, string FileName) : this()
+        {
+            BASEFOLDER = filePath;
+            _SolutionName = _TcProjectName = FileName;
 
+        }
         public void CreateNewProject()
         {
 
@@ -99,7 +105,7 @@ namespace MDRConfigTool
              * ------------------------------------------------------ */
             Helper.DeleteDirectory(BASEFOLDER);
             Directory.CreateDirectory(BASEFOLDER);
-            Directory.CreateDirectory(BASEFOLDER + "\\" + _tcProjectName);
+            Directory.CreateDirectory(BASEFOLDER);
 
             /* ------------------------------------------------------
              * Create and save new solution
@@ -116,10 +122,7 @@ namespace MDRConfigTool
 
         }
 
-        public SolutionHandler(string filePath): this()
-        {
-            BASEFOLDER = filePath;
-        }
+
 
         public void PLCdeclarations(DataTable dt)
         {

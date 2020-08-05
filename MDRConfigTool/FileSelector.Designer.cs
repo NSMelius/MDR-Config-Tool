@@ -42,13 +42,13 @@
             this.lbAmsNetId = new System.Windows.Forms.Label();
             this.tbAmsNetId = new System.Windows.Forms.TextBox();
             this.pnlWelcome = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pnlLibSelect = new System.Windows.Forms.Panel();
             this.btnLibNext = new System.Windows.Forms.Button();
             this.btnLibBrowse = new System.Windows.Forms.Button();
             this.tbLibFile = new System.Windows.Forms.TextBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -56,8 +56,8 @@
             this.gbAmsSettings.SuspendLayout();
             this.pnlWelcome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.pnlLibSelect.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pnlLibSelect.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbFilePath
@@ -176,23 +176,13 @@
             // 
             // pnlWelcome
             // 
-            this.pnlWelcome.Controls.Add(this.btnStart);
             this.pnlWelcome.Controls.Add(this.pictureBox1);
+            this.pnlWelcome.Controls.Add(this.btnStart);
             this.pnlWelcome.Controls.Add(this.pictureBox2);
             this.pnlWelcome.Location = new System.Drawing.Point(12, 12);
             this.pnlWelcome.Name = "pnlWelcome";
             this.pnlWelcome.Size = new System.Drawing.Size(603, 385);
             this.pnlWelcome.TabIndex = 6;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(305, 385);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // btnStart
             // 
@@ -203,6 +193,27 @@
             this.btnStart.Text = "Next";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(23, 4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(282, 381);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
+            this.pictureBox2.Location = new System.Drawing.Point(252, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(444, 385);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 2;
+            this.pictureBox2.TabStop = false;
             // 
             // pnlLibSelect
             // 
@@ -222,7 +233,6 @@
             this.btnLibNext.TabIndex = 2;
             this.btnLibNext.Text = "Next";
             this.btnLibNext.UseVisualStyleBackColor = true;
-            this.btnLibNext.Click += new System.EventHandler(this.btnLibNext_Click);
             // 
             // btnLibBrowse
             // 
@@ -242,27 +252,16 @@
             this.tbLibFile.TabIndex = 0;
             this.tbLibFile.Text = "C:\\";
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
-            this.pictureBox2.Location = new System.Drawing.Point(252, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(444, 385);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
-            // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
             this.Controls.Add(this.pnlLibSelect);
             this.Controls.Add(this.pnlFileSelect);
-            this.Controls.Add(this.pnlDataDisplay);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
@@ -274,9 +273,9 @@
             this.gbAmsSettings.PerformLayout();
             this.pnlWelcome.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.pnlLibSelect.ResumeLayout(false);
             this.pnlLibSelect.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
