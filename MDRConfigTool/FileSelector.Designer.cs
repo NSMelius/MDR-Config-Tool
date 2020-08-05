@@ -42,8 +42,8 @@
             this.lbAmsNetId = new System.Windows.Forms.Label();
             this.tbAmsNetId = new System.Windows.Forms.TextBox();
             this.pnlWelcome = new System.Windows.Forms.Panel();
-            this.btnStart = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnStart = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pnlLibSelect = new System.Windows.Forms.Panel();
             this.btnLibNext = new System.Windows.Forms.Button();
@@ -184,16 +184,6 @@
             this.pnlWelcome.Size = new System.Drawing.Size(603, 385);
             this.pnlWelcome.TabIndex = 6;
             // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(524, 352);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 0;
-            this.btnStart.Text = "Next";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -203,6 +193,16 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(524, 352);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 0;
+            this.btnStart.Text = "Next";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // pictureBox2
             // 
@@ -257,11 +257,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlLibSelect);
+            this.Controls.Add(this.pnlFileSelect);
             this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
-            this.Controls.Add(this.pnlLibSelect);
-            this.Controls.Add(this.pnlFileSelect);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
