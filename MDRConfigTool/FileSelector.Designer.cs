@@ -314,10 +314,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlDataDisplay);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
             this.Controls.Add(this.pnlFileSelect);
-            this.Controls.Add(this.pnlDataDisplay);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
