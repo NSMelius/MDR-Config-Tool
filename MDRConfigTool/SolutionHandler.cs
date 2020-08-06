@@ -193,13 +193,13 @@ END_VAR";
         public void DeleteLibrary(ref ITcPlcLibraryManager libraryManager)
         {
             //---Create new repo path
-            string newRepoPath = @"C:\MDR_Library_Repo";
+            string newRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries\BAUS";
 
             //---Remove Library from references 
             libraryManager.RemoveReference("MDR_Control");
 
             //---Uninstall library from repository
-            libraryManager.UninstallLibrary("MDR_Repo", "MDR_Control", "0.4", "BAUS");
+            libraryManager.UninstallLibrary("MDR_Repo", "MDR_Control", "1.0", "BAUS");
 
             //---Remove repository from system    
             libraryManager.RemoveRepository("MDR_Repo");
@@ -219,10 +219,10 @@ END_VAR";
                 boxName[i] = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
                 if (i >= 1)
                 {
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^Control_3", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_3");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^Control_4", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Control_4");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_1", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^Control_1");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Control_2", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^Control_2");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^SlugMode_From_Upstream_Zone", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^SlugMode_To_Downstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^Wakeup_From_Upstream_Zone", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Wakeup_To_Downstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^RTR_From_Downstream_Zone", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^RTR_To_Upstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Occupied_From_Downstream_Zone", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^Occupied_To_Upstream_Zone");
                 }
 
 
@@ -230,7 +230,7 @@ END_VAR";
                 j++;
             }
 
-
+            
 
 
 

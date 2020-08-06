@@ -45,17 +45,20 @@
             this.btnTableOK = new System.Windows.Forms.Button();
             this.dgvListDisplay = new System.Windows.Forms.DataGridView();
             this.pnlSolutionsettings = new System.Windows.Forms.Panel();
+            this.tbSolExplain = new System.Windows.Forms.TextBox();
             this.btnOpenSolution = new System.Windows.Forms.Button();
             this.gbAmsSettings = new System.Windows.Forms.GroupBox();
+            this.cbRoutes = new System.Windows.Forms.ComboBox();
             this.lbAmsNetId = new System.Windows.Forms.Label();
             this.tbAmsNetId = new System.Windows.Forms.TextBox();
             this.pnlWelcome = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lbWelcome = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pbWelcome = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
-            this.tbSolExplain = new System.Windows.Forms.TextBox();
-            this.cbRoutes = new System.Windows.Forms.ComboBox();
+            this.pnlFinish = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnFinish = new System.Windows.Forms.Button();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -64,6 +67,8 @@
             this.pnlWelcome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbWelcome)).BeginInit();
+            this.pnlFinish.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // tbFilePath
@@ -226,6 +231,18 @@
             this.pnlSolutionsettings.TabIndex = 5;
             this.pnlSolutionsettings.Visible = false;
             // 
+            // tbSolExplain
+            // 
+            this.tbSolExplain.Location = new System.Drawing.Point(87, 27);
+            this.tbSolExplain.Multiline = true;
+            this.tbSolExplain.Name = "tbSolExplain";
+            this.tbSolExplain.ReadOnly = true;
+            this.tbSolExplain.Size = new System.Drawing.Size(388, 74);
+            this.tbSolExplain.TabIndex = 5;
+            this.tbSolExplain.Text = "We will now start scanning in your hardware, editing your drive\'s start-up parame" +
+    "ters, and then creating the necessary function blocks and variables in the PLC.\r" +
+    "\n\r\nPlease provide the target AMSNetID.";
+            // 
             // btnOpenSolution
             // 
             this.btnOpenSolution.Location = new System.Drawing.Point(500, 353);
@@ -246,6 +263,14 @@
             this.gbAmsSettings.Size = new System.Drawing.Size(343, 67);
             this.gbAmsSettings.TabIndex = 2;
             this.gbAmsSettings.TabStop = false;
+            // 
+            // cbRoutes
+            // 
+            this.cbRoutes.FormattingEnabled = true;
+            this.cbRoutes.Location = new System.Drawing.Point(165, 40);
+            this.cbRoutes.Name = "cbRoutes";
+            this.cbRoutes.Size = new System.Drawing.Size(121, 21);
+            this.cbRoutes.TabIndex = 2;
             // 
             // lbAmsNetId
             // 
@@ -275,16 +300,6 @@
             this.pnlWelcome.Size = new System.Drawing.Size(603, 385);
             this.pnlWelcome.TabIndex = 6;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(303, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(300, 326);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
             // lbWelcome
             // 
             this.lbWelcome.AutoSize = true;
@@ -294,6 +309,16 @@
             this.lbWelcome.Size = new System.Drawing.Size(508, 29);
             this.lbWelcome.TabIndex = 2;
             this.lbWelcome.Text = "Welcome to the MDR Drive configuration Tool!";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(303, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(300, 326);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
             // pbWelcome
             // 
@@ -315,31 +340,41 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // tbSolExplain
+            // pnlFinish
             // 
-            this.tbSolExplain.Location = new System.Drawing.Point(87, 27);
-            this.tbSolExplain.Multiline = true;
-            this.tbSolExplain.Name = "tbSolExplain";
-            this.tbSolExplain.ReadOnly = true;
-            this.tbSolExplain.Size = new System.Drawing.Size(388, 74);
-            this.tbSolExplain.TabIndex = 5;
-            this.tbSolExplain.Text = "We will now start scanning in your hardware, editing your drive\'s start-up parame" +
-    "ters, and then creating the necessary function blocks and variables in the PLC.\r" +
-    "\n\r\nPlease provide the target AMSNetID.";
+            this.pnlFinish.Controls.Add(this.btnFinish);
+            this.pnlFinish.Controls.Add(this.pictureBox2);
+            this.pnlFinish.Location = new System.Drawing.Point(12, 12);
+            this.pnlFinish.Name = "pnlFinish";
+            this.pnlFinish.Size = new System.Drawing.Size(603, 385);
+            this.pnlFinish.TabIndex = 8;
+            this.pnlFinish.Visible = false;
             // 
-            // cbRoutes
+            // pictureBox2
             // 
-            this.cbRoutes.FormattingEnabled = true;
-            this.cbRoutes.Location = new System.Drawing.Point(165, 40);
-            this.cbRoutes.Name = "cbRoutes";
-            this.cbRoutes.Size = new System.Drawing.Size(121, 21);
-            this.cbRoutes.TabIndex = 2;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(8, 7);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(592, 164);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // btnFinish
+            // 
+            this.btnFinish.Location = new System.Drawing.Point(399, 314);
+            this.btnFinish.Name = "btnFinish";
+            this.btnFinish.Size = new System.Drawing.Size(204, 71);
+            this.btnFinish.TabIndex = 1;
+            this.btnFinish.Text = "FINISH!";
+            this.btnFinish.UseVisualStyleBackColor = true;
+            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 409);
+            this.Controls.Add(this.pnlFinish);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
             this.Controls.Add(this.pnlFileSelect);
@@ -359,6 +394,8 @@
             this.pnlWelcome.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbWelcome)).EndInit();
+            this.pnlFinish.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -392,6 +429,9 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox tbSolExplain;
         private System.Windows.Forms.ComboBox cbRoutes;
+        private System.Windows.Forms.Panel pnlFinish;
+        private System.Windows.Forms.Button btnFinish;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 
      

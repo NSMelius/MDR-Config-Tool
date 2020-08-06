@@ -114,19 +114,18 @@ namespace MDRConfigTool
             solHandler.SetNetId(tbAmsNetId.Text);
             //solHandler.ScanDevicesAndBoxes(DT);
             solHandler.PLCdeclarations(DT);
+            System.Threading.Thread.Sleep(5000);
             solHandler.linkVariables(DT);
             //solHandler.ActivateConfiguration();
 
             pnlSolutionsettings.Visible = false;
+            pnlFinish.Visible = false;
 
         }//btnOpenSolution_Click()
 
-   
-
-
-
-
-
-
+        private void btnFinish_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
