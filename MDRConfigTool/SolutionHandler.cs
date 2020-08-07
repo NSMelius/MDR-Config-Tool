@@ -126,18 +126,16 @@ namespace MDRConfigTool
         public void PLCdeclarations(DataTable dt)
         {
 
-            string mainVar = @"PROGRAM MAIN
-VAR" + Environment.NewLine;
+            string mainVar = @"VAR_GLOBAL" + Environment.NewLine;
             string endMain = Environment.NewLine + @"          
 END_VAR";
 
 
             //Add function blocks to MAIN declaration
-            ITcSmTreeItem main = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^POUs^MAIN");
-
+            ITcSmTreeItem main = sysMan.LookupTreeItem("TIPC^Untitled1^Untitled1 Project^GVLs");
+            ITcSmTreeItem GVL = main.CreateChild("MDR_Control_FBs", 615, "", 0);
             //Cast to specific interface for declaration and implementation area
-            ITcPlcDeclaration mainDecl = (ITcPlcDeclaration)main;
-           // ITcPlcImplementation mainImpl = (ITcPlcImplementation)main;
+            ITcPlcDeclaration mainDecl = (ITcPlcDeclaration)GVL;
 
 
             //Get current declaration and implementation area content
@@ -172,18 +170,18 @@ END_VAR";
             string newRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries";
             string oldRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries\BAUS";
             //---Create new repository and insert into repo path---
-            if (Directory.Exists(oldRepoPath))
-            {
-                libraryManager.RemoveRepository("MDR_Repo");
-            }
-            Directory.CreateDirectory(newRepoPath);
+            //if (Directory.Exists(oldRepoPath))
+           // {
+           //     libraryManager.RemoveRepository("MDR_Repo");
+           // }
+           // Directory.CreateDirectory(newRepoPath);
             
-            libraryManager.InsertRepository("MDR_Repo", newRepoPath, 0);
+          //  libraryManager.InsertRepository("BAUS", newRepoPath, 0);
 
             string libPath = buildPathString("MDR_Control.library");
 
             //---Install library into new repository
-            libraryManager.InstallLibrary("MDR_Repo", libPath, true); //--library must exists in TwinCAT folder.
+            libraryManager.InstallLibrary("System", libPath, true); //--library must exists in TwinCAT folder.
             //--- libpath needs to be added to basefolder in this install command (needs full path to folder + MDR_Control.library
 
             //---Add library from repository
@@ -193,17 +191,16 @@ END_VAR";
         public void DeleteLibrary(ref ITcPlcLibraryManager libraryManager)
         {
             //---Create new repo path
-            string newRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries\BAUS";
+            //string newRepoPath = @"C:\TwinCAT\3.1\Components\Plc\Managed Libraries\BAUS";
 
             //---Remove Library from references 
             libraryManager.RemoveReference("MDR_Control");
 
             //---Uninstall library from repository
-            libraryManager.UninstallLibrary("MDR_Repo", "MDR_Control", "1.0", "BAUS");
+            libraryManager.UninstallLibrary("System", "MDR_Control", "1.0", "BAUS");
 
             //---Remove repository from system    
-            libraryManager.RemoveRepository("MDR_Repo");
-            Directory.Delete(newRepoPath, true);
+          
         }
 
         public void linkVariables(DataTable dt)
@@ -219,10 +216,10 @@ END_VAR";
                 boxName[i] = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
                 if (i >= 1)
                 {
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^SlugMode_From_Upstream_Zone", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^SlugMode_To_Downstream_Zone");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i - 1] + ".stInput^Wakeup_From_Upstream_Zone", plcOutputsPath + "^MAIN." + boxName[i] + ".stOutput^Wakeup_To_Downstream_Zone");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^RTR_From_Downstream_Zone", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^RTR_To_Upstream_Zone");
-                    sysMan.LinkVariables(plcInputsPath + "^MAIN." + boxName[i] + ".stInput^Occupied_From_Downstream_Zone", plcOutputsPath + "^MAIN." + boxName[i - 1] + ".stOutput^Occupied_To_Upstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MDR_Control_FBs." + boxName[i - 1] + ".stInput^SlugMode_From_Upstream_Zone", plcOutputsPath + "^MDR_Control_FBs." + boxName[i] + ".stOutput^SlugMode_To_Downstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MDR_Control_FBs." + boxName[i - 1] + ".stInput^Wakeup_From_Upstream_Zone", plcOutputsPath + "^MDR_Control_FBs." + boxName[i] + ".stOutput^Wakeup_To_Downstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MDR_Control_FBs." + boxName[i] + ".stInput^RTR_From_Downstream_Zone", plcOutputsPath + "^MDR_Control_FBs." + boxName[i - 1] + ".stOutput^RTR_To_Upstream_Zone");
+                    sysMan.LinkVariables(plcInputsPath + "^MDR_Control_FBs." + boxName[i] + ".stInput^Occupied_From_Downstream_Zone", plcOutputsPath + "^MDR_Control_FBs." + boxName[i - 1] + ".stOutput^Occupied_To_Upstream_Zone");
                 }
 
 
@@ -337,18 +334,27 @@ END_VAR";
                 {
                     Console.WriteLine("Warning: {0}", ex.Message);
                 }
-
+                int j = 0;
                 foreach (ITcSmTreeItem Box in device)
                 {
-                    int j = 0;
+                    
                     //oSheet.Cells[1, 1] = Box.Name; //assigns EK1100 to first table cell
                     if (Box.ItemSubTypeName.Contains("EP7402-0057"))
                     {
-                        
-                        Box.Name = dt.Rows[j].ItemArray[0].ToString()+j.ToString();
-                        j++;
-                        this.EditParams(Box, dt.Rows[j].ItemArray[2].ToString());
+                        bool match = false;
+                        do
+                        {
+                            if (dt.Rows[j].ItemArray[1].ToString().Contains("EP7402"))
+                            {
+                                Box.Name = dt.Rows[j].ItemArray[0].ToString() + j.ToString();
+                                match = true;
+                                this.EditParams(Box, dt.Rows[j].ItemArray[2].ToString());
+                                j++;
+                            }
+                            else { j++; };
+                        } while (j < dt.Rows.Count || match);
                     }
+
                     foreach (ITcSmTreeItem box in Box)
                     {
                         bTerm = box.ItemType == 6;
@@ -368,7 +374,10 @@ END_VAR";
         public void SetNetId(string NetId)
         {
             //finding the open form so we can get the textbox value
-            
+            if (NetId.Equals("127.0.0.1.1.1"))
+            {
+                NetId = AmsNetId.Local.ToString();
+            }
             //sets the target to the textbox value.
             sysMan.SetTargetNetId(NetId);
         }//SetNetId()
@@ -397,8 +406,15 @@ END_VAR";
             XmlNodeList xmlInitCmds = xNode.ChildNodes;
             foreach (XmlNode Cmd in xmlInitCmds)
             {
-                string newStartListParam = Cmd.ToString();//"<InitCmd><Transition>PS</Transition><Comment><![CDATA[Motor temperature sensor type]]></Comment><Timeout>0</Timeout><OpCode>3</OpCode><DriveNo>0</DriveNo><IDN>32829</IDN><Elements>64</Elements><Attribute>0</Attribute><Data>0400</Data></InitCmd>";
-                int idx = driveParams.IndexOf("</InitCmd></InitCmds></SoE></Mailbox>");
+                string newStartListParam = "<" + Cmd.Name + ">";
+                foreach (XmlNode node in Cmd)
+                {
+                    newStartListParam += "<" + node.Name + ">";
+                    newStartListParam += node.InnerText;
+                    newStartListParam += "</" + node.Name + ">";
+                }
+                newStartListParam += "</" + Cmd.Name+ ">";
+                int idx = driveParams.IndexOf("</InitCmd></InitCmds><CanOpenType>55</CanOpenType></CoE></Mailbox>");
                 idx = idx + 10;
                 driveParams = driveParams.Insert(idx, newStartListParam);
             }
@@ -447,9 +463,45 @@ END_VAR";
             }
             
 
-        }
+        }//isLinkingCompatible()
+
+       /* public string[] getRoutes()
+       // {
+            
+
+        }//getRoutes()*/
+
+        //private void CreatePLCVariable()
+       // {
+            /*-------------------------------------------
+             * This Method should be used to create thhesary PLC variable within the PLC project.
+             * The process should simulate the act of opening the drive's node in TwinCAt, openning the PLC tab,
+             * and then checking the create PLC DataTyp box.
+             * For now, we should see if we can get the necessary xml nodes from the drive to use the create Datatype method
+             * of the ITcTypeSystem interface.
+             * ------------------------------------------*/
+         //   ITcTypeSystem TS = sysMan.GetTypeSystem();
+          //      TS.CreateType();
+       // }//CreatePLCVariable()
+
+        private void LinkIoToPlc()
+        {
+            /*------------------------------------------
+             * This is a placehiolder method for the code needed to link our drives to the PLC.
+             * When we say PLC we mean explicitly and exclusively the PLC, no NC task/configuration
+             * can be used.
+             * -----------------------------------------*/
+        }//LinkIoToPlc()
+    
+
+
+
+
+
+
     }//class
 
+   
 
   
 

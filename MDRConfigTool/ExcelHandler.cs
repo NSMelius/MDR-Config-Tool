@@ -70,7 +70,9 @@ namespace MDRConfigTool
             if (!string.IsNullOrEmpty(file))
             {
                 if (file.Contains(".csv") || file.Contains(".txt"))
-                { this._workbooks.OpenText(file, 0, 1, 1, Excel.XlTextQualifier.xlTextQualifierNone, false, false, false, true); }
+                {  this._workbooks.OpenText(file, 2, 1, 1, Excel.XlTextQualifier.xlTextQualifierNone, false, false, false, true);
+                    this._workbook = this._app.ActiveWorkbook;
+                }
                 else if (file.Contains(".xls") || file.Contains(".xlms") || file.Contains(".xlsx"))
                 {
                     this._workbook = this._workbooks.Open(file);
@@ -86,23 +88,22 @@ namespace MDRConfigTool
             for (int i = 1; i < rCount; i++)
             {
                 string CellVal = String.Empty;
-                try
-                {
+               
                     CellVal = (string)data[i, j];
-                }catch(Exception ex)
-                {
+               
                    
-                }
-                    if (j == 1) {
-                        row = DT.NewRow();
-                        row[j-1] = CellVal;
-                        DT.Rows.Add(row);
-                    }
-                    else
-                    {
-                        row = DT.Rows[i-1];
-                        row[j-1] = CellVal;
-                    }
+                        if (j == 1)
+                        {
+                            row = DT.NewRow();
+                            row[j - 1] = CellVal;
+                            DT.Rows.Add(row);
+                        }
+                        else
+                        {
+                            row = DT.Rows[i - 1];
+                            row[j - 1] = CellVal;
+                        }
+                    
             }
         }
 

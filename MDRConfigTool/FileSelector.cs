@@ -84,13 +84,15 @@ namespace MDRConfigTool
             {
 
                 fileReader = new ExcelHandler(sFilePath);
+                tsStatus.Text = "Reading data from spreadsheet";
                 DT = fileReader.RetrieveData();
+                tsStatus.Text = "Closing File";
                 fileReader.closeFile();
 
-             
+                tsStatus.Text = "Creating new TwinCAT project...";
                 solHandler = new SolutionHandler(tbFilePath.Text, tbProjectName.Text);
 
-
+                tsStatus.Text = "Done!";
                 pnlFileSelect.Visible = false; 
                 dgvListDisplay.DataSource = DT;
                 pnlDataDisplay.Visible = true;
@@ -110,22 +112,33 @@ namespace MDRConfigTool
 
         private void btnOpenSolution_Click(object sender, EventArgs e)
         {
-            
+            tsStatus.Text = "Setting the NetID...";
             solHandler.SetNetId(tbAmsNetId.Text);
-            //solHandler.ScanDevicesAndBoxes(DT);
+            tsStatus.Text = "Declaring PLC Function Blocks";
             solHandler.PLCdeclarations(DT);
-            System.Threading.Thread.Sleep(5000);
+            //System.Threading.Thread.Sleep(5000);
+            tsStatus.Text = "Linking Function Block Instances Together...";
             solHandler.linkVariables(DT);
-            //solHandler.ActivateConfiguration();
+            tsStatus.Text = "Scanning for MDR Controllers...";
+            solHandler.ScanDevicesAndBoxes(DT);
+            tsStatus.Text = "Activating Configuration...";
+            
 
+            tsStatus.Text = "Done!";
             pnlSolutionsettings.Visible = false;
-            pnlFinish.Visible = false;
+            pnlFinish.Visible = true;
 
         }//btnOpenSolution_Click()
 
         private void btnFinish_Click(object sender, EventArgs e)
-        {
+        {       
             this.Close();
+        }
+
+        private void btnActivate_Click(object sender, EventArgs e)
+        {
+            solHandler.ActivateConfiguration();
+            btnFinish_Click(this, e);
         }
     }
 }

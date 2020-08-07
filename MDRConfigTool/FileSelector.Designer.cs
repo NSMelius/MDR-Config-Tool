@@ -57,8 +57,13 @@
             this.pbWelcome = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.pnlFinish = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnFinish = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnActivate = new System.Windows.Forms.Button();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -69,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbWelcome)).BeginInit();
             this.pnlFinish.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbFilePath
@@ -291,13 +297,14 @@
             // 
             // pnlWelcome
             // 
+            this.pnlWelcome.Controls.Add(this.textBox1);
             this.pnlWelcome.Controls.Add(this.lbWelcome);
             this.pnlWelcome.Controls.Add(this.pictureBox1);
             this.pnlWelcome.Controls.Add(this.pbWelcome);
             this.pnlWelcome.Controls.Add(this.btnStart);
             this.pnlWelcome.Location = new System.Drawing.Point(12, 12);
             this.pnlWelcome.Name = "pnlWelcome";
-            this.pnlWelcome.Size = new System.Drawing.Size(603, 385);
+            this.pnlWelcome.Size = new System.Drawing.Size(603, 378);
             this.pnlWelcome.TabIndex = 6;
             // 
             // lbWelcome
@@ -332,7 +339,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(524, 353);
+            this.btnStart.Location = new System.Drawing.Point(518, 353);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
@@ -342,6 +349,8 @@
             // 
             // pnlFinish
             // 
+            this.pnlFinish.Controls.Add(this.btnActivate);
+            this.pnlFinish.Controls.Add(this.textBox2);
             this.pnlFinish.Controls.Add(this.btnFinish);
             this.pnlFinish.Controls.Add(this.pictureBox2);
             this.pnlFinish.Location = new System.Drawing.Point(12, 12);
@@ -349,6 +358,16 @@
             this.pnlFinish.Size = new System.Drawing.Size(603, 385);
             this.pnlFinish.TabIndex = 8;
             this.pnlFinish.Visible = false;
+            // 
+            // btnFinish
+            // 
+            this.btnFinish.Location = new System.Drawing.Point(399, 314);
+            this.btnFinish.Name = "btnFinish";
+            this.btnFinish.Size = new System.Drawing.Size(204, 71);
+            this.btnFinish.TabIndex = 1;
+            this.btnFinish.Text = "Close Utility without Activating";
+            this.btnFinish.UseVisualStyleBackColor = true;
+            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // pictureBox2
             // 
@@ -359,21 +378,58 @@
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
             // 
-            // btnFinish
+            // statusStrip1
             // 
-            this.btnFinish.Location = new System.Drawing.Point(399, 314);
-            this.btnFinish.Name = "btnFinish";
-            this.btnFinish.Size = new System.Drawing.Size(204, 71);
-            this.btnFinish.TabIndex = 1;
-            this.btnFinish.Text = "FINISH!";
-            this.btnFinish.UseVisualStyleBackColor = true;
-            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 401);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(627, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "...";
+            // 
+            // tsStatus
+            // 
+            this.tsStatus.Name = "tsStatus";
+            this.tsStatus.Size = new System.Drawing.Size(0, 17);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(19, 321);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(573, 32);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(19, 180);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(561, 105);
+            this.textBox2.TabIndex = 2;
+            this.textBox2.Text = resources.GetString("textBox2.Text");
+            // 
+            // btnActivate
+            // 
+            this.btnActivate.Location = new System.Drawing.Point(200, 313);
+            this.btnActivate.Name = "btnActivate";
+            this.btnActivate.Size = new System.Drawing.Size(181, 72);
+            this.btnActivate.TabIndex = 3;
+            this.btnActivate.Text = "Activate Configuration and Close";
+            this.btnActivate.UseVisualStyleBackColor = true;
+            this.btnActivate.Click += new System.EventHandler(this.btnActivate_Click);
             // 
             // FileSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(627, 409);
+            this.ClientSize = new System.Drawing.Size(627, 423);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pnlFinish);
             this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
@@ -395,8 +451,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbWelcome)).EndInit();
             this.pnlFinish.ResumeLayout(false);
+            this.pnlFinish.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -432,6 +492,11 @@
         private System.Windows.Forms.Panel pnlFinish;
         private System.Windows.Forms.Button btnFinish;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatus;
+        private System.Windows.Forms.Button btnActivate;
+        private System.Windows.Forms.TextBox textBox2;
     }
 
      
