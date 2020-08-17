@@ -48,22 +48,19 @@
             this.tbSolExplain = new System.Windows.Forms.TextBox();
             this.btnOpenSolution = new System.Windows.Forms.Button();
             this.gbAmsSettings = new System.Windows.Forms.GroupBox();
-            this.cbRoutes = new System.Windows.Forms.ComboBox();
             this.lbAmsNetId = new System.Windows.Forms.Label();
-            this.tbAmsNetId = new System.Windows.Forms.TextBox();
             this.pnlWelcome = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.lbWelcome = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pbWelcome = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.pnlFinish = new System.Windows.Forms.Panel();
+            this.btnActivate = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.btnFinish = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.btnActivate = new System.Windows.Forms.Button();
+            this.cbRoutes = new System.Windows.Forms.ComboBox();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -71,9 +68,7 @@
             this.gbAmsSettings.SuspendLayout();
             this.pnlWelcome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWelcome)).BeginInit();
             this.pnlFinish.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -263,20 +258,11 @@
             // 
             this.gbAmsSettings.Controls.Add(this.cbRoutes);
             this.gbAmsSettings.Controls.Add(this.lbAmsNetId);
-            this.gbAmsSettings.Controls.Add(this.tbAmsNetId);
             this.gbAmsSettings.Location = new System.Drawing.Point(116, 131);
             this.gbAmsSettings.Name = "gbAmsSettings";
             this.gbAmsSettings.Size = new System.Drawing.Size(343, 67);
             this.gbAmsSettings.TabIndex = 2;
             this.gbAmsSettings.TabStop = false;
-            // 
-            // cbRoutes
-            // 
-            this.cbRoutes.FormattingEnabled = true;
-            this.cbRoutes.Location = new System.Drawing.Point(165, 40);
-            this.cbRoutes.Name = "cbRoutes";
-            this.cbRoutes.Size = new System.Drawing.Size(121, 21);
-            this.cbRoutes.TabIndex = 2;
             // 
             // lbAmsNetId
             // 
@@ -287,25 +273,27 @@
             this.lbAmsNetId.TabIndex = 1;
             this.lbAmsNetId.Text = "Target Ams Net Id:";
             // 
-            // tbAmsNetId
-            // 
-            this.tbAmsNetId.Location = new System.Drawing.Point(165, 23);
-            this.tbAmsNetId.Name = "tbAmsNetId";
-            this.tbAmsNetId.Size = new System.Drawing.Size(100, 20);
-            this.tbAmsNetId.TabIndex = 0;
-            this.tbAmsNetId.Text = "127.0.0.1.1.1";
-            // 
             // pnlWelcome
             // 
             this.pnlWelcome.Controls.Add(this.textBox1);
             this.pnlWelcome.Controls.Add(this.lbWelcome);
             this.pnlWelcome.Controls.Add(this.pictureBox1);
-            this.pnlWelcome.Controls.Add(this.pbWelcome);
             this.pnlWelcome.Controls.Add(this.btnStart);
             this.pnlWelcome.Location = new System.Drawing.Point(12, 12);
             this.pnlWelcome.Name = "pnlWelcome";
-            this.pnlWelcome.Size = new System.Drawing.Size(603, 378);
+            this.pnlWelcome.Size = new System.Drawing.Size(603, 385);
             this.pnlWelcome.TabIndex = 6;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(19, 321);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(573, 32);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // lbWelcome
             // 
@@ -320,22 +308,12 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(303, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(3, 27);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(300, 326);
+            this.pictureBox1.Size = new System.Drawing.Size(600, 326);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
-            // 
-            // pbWelcome
-            // 
-            this.pbWelcome.Image = ((System.Drawing.Image)(resources.GetObject("pbWelcome.Image")));
-            this.pbWelcome.Location = new System.Drawing.Point(8, 27);
-            this.pbWelcome.Name = "pbWelcome";
-            this.pbWelcome.Size = new System.Drawing.Size(289, 326);
-            this.pbWelcome.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbWelcome.TabIndex = 1;
-            this.pbWelcome.TabStop = false;
             // 
             // btnStart
             // 
@@ -352,12 +330,31 @@
             this.pnlFinish.Controls.Add(this.btnActivate);
             this.pnlFinish.Controls.Add(this.textBox2);
             this.pnlFinish.Controls.Add(this.btnFinish);
-            this.pnlFinish.Controls.Add(this.pictureBox2);
             this.pnlFinish.Location = new System.Drawing.Point(12, 12);
             this.pnlFinish.Name = "pnlFinish";
             this.pnlFinish.Size = new System.Drawing.Size(603, 385);
             this.pnlFinish.TabIndex = 8;
             this.pnlFinish.Visible = false;
+            // 
+            // btnActivate
+            // 
+            this.btnActivate.Location = new System.Drawing.Point(200, 313);
+            this.btnActivate.Name = "btnActivate";
+            this.btnActivate.Size = new System.Drawing.Size(181, 72);
+            this.btnActivate.TabIndex = 3;
+            this.btnActivate.Text = "Activate Configuration and Close";
+            this.btnActivate.UseVisualStyleBackColor = true;
+            this.btnActivate.Click += new System.EventHandler(this.btnActivate_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(19, 128);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(561, 105);
+            this.textBox2.TabIndex = 2;
+            this.textBox2.Text = resources.GetString("textBox2.Text");
             // 
             // btnFinish
             // 
@@ -368,15 +365,6 @@
             this.btnFinish.Text = "Close Utility without Activating";
             this.btnFinish.UseVisualStyleBackColor = true;
             this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(8, 7);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(592, 164);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
             // 
             // statusStrip1
             // 
@@ -393,36 +381,13 @@
             this.tsStatus.Name = "tsStatus";
             this.tsStatus.Size = new System.Drawing.Size(0, 17);
             // 
-            // textBox1
+            // cbRoutes
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(19, 321);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(573, 32);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(19, 180);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(561, 105);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.Text = resources.GetString("textBox2.Text");
-            // 
-            // btnActivate
-            // 
-            this.btnActivate.Location = new System.Drawing.Point(200, 313);
-            this.btnActivate.Name = "btnActivate";
-            this.btnActivate.Size = new System.Drawing.Size(181, 72);
-            this.btnActivate.TabIndex = 3;
-            this.btnActivate.Text = "Activate Configuration and Close";
-            this.btnActivate.UseVisualStyleBackColor = true;
-            this.btnActivate.Click += new System.EventHandler(this.btnActivate_Click);
+            this.cbRoutes.FormattingEnabled = true;
+            this.cbRoutes.Location = new System.Drawing.Point(165, 26);
+            this.cbRoutes.Name = "cbRoutes";
+            this.cbRoutes.Size = new System.Drawing.Size(172, 21);
+            this.cbRoutes.TabIndex = 2;
             // 
             // FileSelector
             // 
@@ -430,11 +395,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 423);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.pnlFinish);
-            this.Controls.Add(this.pnlWelcome);
             this.Controls.Add(this.pnlSolutionsettings);
             this.Controls.Add(this.pnlFileSelect);
             this.Controls.Add(this.pnlDataDisplay);
+            this.Controls.Add(this.pnlFinish);
+            this.Controls.Add(this.pnlWelcome);
             this.Name = "FileSelector";
             this.Text = "MDR Drive Configuration Tool";
             this.pnlFileSelect.ResumeLayout(false);
@@ -449,10 +414,8 @@
             this.pnlWelcome.ResumeLayout(false);
             this.pnlWelcome.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWelcome)).EndInit();
             this.pnlFinish.ResumeLayout(false);
             this.pnlFinish.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -469,14 +432,12 @@
         private System.Windows.Forms.Panel pnlDataDisplay;
         private System.Windows.Forms.DataGridView dgvListDisplay;
         private System.Windows.Forms.Panel pnlSolutionsettings;
-        private System.Windows.Forms.TextBox tbAmsNetId;
         private System.Windows.Forms.Button btnTableOK;
         private System.Windows.Forms.Button btnOpenSolution;
         private System.Windows.Forms.GroupBox gbAmsSettings;
         private System.Windows.Forms.Label lbAmsNetId;
         private System.Windows.Forms.Panel pnlWelcome;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.PictureBox pbWelcome;
         private System.Windows.Forms.Label lbFileSelect;
         private System.Windows.Forms.Label lbReadData;
         private System.Windows.Forms.Label lbWelcome;
@@ -488,15 +449,14 @@
         private System.Windows.Forms.Button btnBrowseFile;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox tbSolExplain;
-        private System.Windows.Forms.ComboBox cbRoutes;
         private System.Windows.Forms.Panel pnlFinish;
         private System.Windows.Forms.Button btnFinish;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsStatus;
         private System.Windows.Forms.Button btnActivate;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.ComboBox cbRoutes;
     }
 
      

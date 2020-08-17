@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace MDRConfigTool
 {
@@ -21,9 +22,9 @@ namespace MDRConfigTool
         public FileSelector()
         {
             InitializeComponent();
-
-            
-
+            fillAdsRoutes();
+            pnlWelcome.BringToFront();
+            pnlWelcome.Visible = true;
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -105,6 +106,7 @@ namespace MDRConfigTool
         {
 
             pnlDataDisplay.Visible = false;
+           
             pnlSolutionsettings.Visible = true;
 
         }//btnTableOK_Click
@@ -113,7 +115,8 @@ namespace MDRConfigTool
         private void btnOpenSolution_Click(object sender, EventArgs e)
         {
             tsStatus.Text = "Setting the NetID...";
-            solHandler.SetNetId(tbAmsNetId.Text);
+            string amsNetId = getAdsRouteFromCB();
+            solHandler.SetNetId(amsNetId);
             tsStatus.Text = "Declaring PLC Function Blocks";
             solHandler.PLCdeclarations(DT);
             //System.Threading.Thread.Sleep(5000);
@@ -127,7 +130,7 @@ namespace MDRConfigTool
             tsStatus.Text = "Done!";
             pnlSolutionsettings.Visible = false;
             pnlFinish.Visible = true;
-
+            
         }//btnOpenSolution_Click()
 
         private void btnFinish_Click(object sender, EventArgs e)
@@ -139,6 +142,43 @@ namespace MDRConfigTool
         {
             solHandler.ActivateConfiguration();
             btnFinish_Click(this, e);
+        }
+
+        private void fillAdsRoutes()
+        {
+            int count = 0;
+            string[] NetIds;
+            XmlDocument xml = new XmlDocument();
+            xml.Load(@"C:\TwinCAT\3.1\Target\StaticRoutes.xml");
+            XmlNodeList Nodes = xml.SelectNodes("/TcConfig/RemoteConnections/Route");
+            NetIds = new string[Nodes.Count];
+            foreach(XmlNode node in Nodes)
+            {
+                foreach(XmlNode attr in node)
+                {
+                    if (attr.Name.Equals("Name")){
+                        NetIds[count] = attr.InnerText + " (";
+                    }
+                    else if (attr.Name.Equals("NetId"))
+                    {
+                        NetIds[count] += attr.InnerText + ")";
+                    }//else if
+                }//foreach attribute in Route Node
+                count++;
+            }//for each Route Node in Rute Node List
+
+            cbRoutes.DataSource = NetIds;
+        }//fillAdsRoutes
+
+        private string getAdsRouteFromCB()
+        {
+            string route, result;
+            route = cbRoutes.SelectedValue.ToString();
+            int idxOpen = route.IndexOf('('), idxClose = route.IndexOf(')');
+            result = route.Substring(idxOpen + 1, (idxClose - (idxOpen+1)));
+            
+            
+            return result;
         }
     }
 }

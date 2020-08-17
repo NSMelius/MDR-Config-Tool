@@ -380,6 +380,7 @@ END_VAR";
             }
             //sets the target to the textbox value.
             sysMan.SetTargetNetId(NetId);
+            
         }//SetNetId()
 
         public void ActivateConfiguration()
@@ -399,7 +400,7 @@ END_VAR";
 
             //open the Motor file as an xml document,read its tags with InitCmds
             XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(path);
+            xDoc.Load(path);
             XmlNode xNode = xDoc.SelectSingleNode("/Mailbox/CoE/InitCmds");
 
             string driveParams = drive.ProduceXml();
