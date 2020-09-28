@@ -30,7 +30,11 @@ namespace MDRConfigTool
             Application.SetCompatibleTextRenderingDefault(false);
             FileSelector fSelect = new FileSelector();
             Application.Run(fSelect);
-           
+
+            /*----------------------------------------------
+             * This is used for unit testing.
+             *SolutionHandler solH = new SolutionHandler();
+             * ---------------------------------------------*/
 
             
         }

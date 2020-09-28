@@ -119,12 +119,13 @@ namespace MDRConfigTool
             solHandler.SetNetId(amsNetId);
             tsStatus.Text = "Declaring PLC Function Blocks";
             solHandler.PLCdeclarations(DT);
-            //System.Threading.Thread.Sleep(5000);
+            tsStatus.Text = "Wating for Project build to complete";
+            System.Threading.Thread.Sleep(5000);
             tsStatus.Text = "Linking Function Block Instances Together...";
             solHandler.linkVariables(DT);
             tsStatus.Text = "Scanning for MDR Controllers...";
             solHandler.ScanDevicesAndBoxes(DT);
-            tsStatus.Text = "Activating Configuration...";
+            
             
 
             tsStatus.Text = "Done!";
@@ -146,12 +147,13 @@ namespace MDRConfigTool
 
         private void fillAdsRoutes()
         {
-            int count = 0;
+            int count = 1;
             string[] NetIds;
             XmlDocument xml = new XmlDocument();
             xml.Load(@"C:\TwinCAT\3.1\Target\StaticRoutes.xml");
             XmlNodeList Nodes = xml.SelectNodes("/TcConfig/RemoteConnections/Route");
-            NetIds = new string[Nodes.Count];
+            NetIds = new string[Nodes.Count+1];
+            NetIds[0] = "<Local> (172.0.0.1.1.1)";
             foreach(XmlNode node in Nodes)
             {
                 foreach(XmlNode attr in node)

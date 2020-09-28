@@ -48,6 +48,7 @@
             this.tbSolExplain = new System.Windows.Forms.TextBox();
             this.btnOpenSolution = new System.Windows.Forms.Button();
             this.gbAmsSettings = new System.Windows.Forms.GroupBox();
+            this.cbRoutes = new System.Windows.Forms.ComboBox();
             this.lbAmsNetId = new System.Windows.Forms.Label();
             this.pnlWelcome = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -60,7 +61,6 @@
             this.btnFinish = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cbRoutes = new System.Windows.Forms.ComboBox();
             this.pnlFileSelect.SuspendLayout();
             this.pnlDataDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListDisplay)).BeginInit();
@@ -264,6 +264,14 @@
             this.gbAmsSettings.TabIndex = 2;
             this.gbAmsSettings.TabStop = false;
             // 
+            // cbRoutes
+            // 
+            this.cbRoutes.FormattingEnabled = true;
+            this.cbRoutes.Location = new System.Drawing.Point(165, 26);
+            this.cbRoutes.Name = "cbRoutes";
+            this.cbRoutes.Size = new System.Drawing.Size(172, 21);
+            this.cbRoutes.TabIndex = 2;
+            // 
             // lbAmsNetId
             // 
             this.lbAmsNetId.AutoSize = true;
@@ -380,14 +388,6 @@
             // 
             this.tsStatus.Name = "tsStatus";
             this.tsStatus.Size = new System.Drawing.Size(0, 17);
-            // 
-            // cbRoutes
-            // 
-            this.cbRoutes.FormattingEnabled = true;
-            this.cbRoutes.Location = new System.Drawing.Point(165, 26);
-            this.cbRoutes.Name = "cbRoutes";
-            this.cbRoutes.Size = new System.Drawing.Size(172, 21);
-            this.cbRoutes.TabIndex = 2;
             // 
             // FileSelector
             // 
