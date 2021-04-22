@@ -38,14 +38,14 @@ namespace MDRConfigTool
 
 
         //This contructor is meant to be used for testing individual methods
-        //It should never be call in a live use 
+        //It should never be called in a live use 
         public SolutionHandler()
         {
             dte = attachToExistingDte(@"C:\Users\NathanM\Desktop\DELETE ME\Garth Gaddy\TestDirectory\Test4.sln",ProgID);
             sol = dte.Solution;
             pro = sol.Projects.Item(1);
             sysMan = (ITcSysManager11)pro.Object;
-
+            adsClient = new TcAdsClient();
             ITcSmTreeItem drive = sysMan.LookupTreeItem(@"TIID^Device_1^InfeedWest0");
 
             LinkIoToPlc(drive);
@@ -57,7 +57,7 @@ namespace MDRConfigTool
         {
             this.BASEFOLDER = filePath;
             this._solutionName = _tcProjectName = FileName;
-
+            this.adsClient = new TcAdsClient();
             MessageFilter.Register();
 
             /* -----------------------------------------------------------------
@@ -253,7 +253,7 @@ END_VAR";
 
         public void activateAndRunPLC()
         {
-            adsClient = new TcAdsClient();
+            
             adsClient.Connect(sysMan.GetTargetNetId(), 10000); //AMS net id of target system. TwinCAT system service port = 10000
             System.Threading.Thread.Sleep(10000); //waiting for TwinCAT to go into Run mode.
             sysMan.ActivateConfiguration();
@@ -452,7 +452,7 @@ END_VAR";
              * make sure that we can read the revision version of the drive through its xml file
              * find the index of the xml node for the CoE parameter for Hardwareversion 16#1009
              * Check if the value of that node is of Hardware version 01(?) or higher.
-             * THe last beta revision number is 1114169
+             * The last beta revision number is 1114169
              * -------------------------------*/
 
             ulong lastBeta = 1114169;
@@ -772,6 +772,7 @@ END_IF";
                 result = -1;
                 MessageBox.Show(ex.Message);
             }
+            adsClient.Disconnect();
             return result;
         }
        

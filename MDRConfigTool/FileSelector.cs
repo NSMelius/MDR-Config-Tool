@@ -77,7 +77,7 @@ namespace MDRConfigTool
 
         }//btnBrowseFile_Click()
 
-        private void btnOPenFile_Click(object sender, EventArgs e)
+        private void btnOpenFile_Click(object sender, EventArgs e)
         {
             
             string sFilePath = tbFilePath.Text + @"\" + tbFileName.Text;
@@ -145,6 +145,7 @@ namespace MDRConfigTool
             btnFinish_Click(this, e);
         }
 
+        //Reads from the StaticRoutes.xml file and populates its contents into a combo-box
         private void fillAdsRoutes()
         {
             int count = 1;
@@ -153,7 +154,7 @@ namespace MDRConfigTool
             xml.Load(@"C:\TwinCAT\3.1\Target\StaticRoutes.xml");
             XmlNodeList Nodes = xml.SelectNodes("/TcConfig/RemoteConnections/Route");
             NetIds = new string[Nodes.Count+1];
-            NetIds[0] = "<Local> (172.0.0.1.1.1)";
+            NetIds[0] = "<Local> (127.0.0.1.1.1)";
             foreach(XmlNode node in Nodes)
             {
                 foreach(XmlNode attr in node)

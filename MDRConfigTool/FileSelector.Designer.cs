@@ -98,7 +98,7 @@
             this.btnOPenFile.TabIndex = 2;
             this.btnOPenFile.Text = "Open";
             this.btnOPenFile.UseVisualStyleBackColor = true;
-            this.btnOPenFile.Click += new System.EventHandler(this.btnOPenFile_Click);
+            this.btnOPenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
             // 
             // pnlFileSelect
             // 

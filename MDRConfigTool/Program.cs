@@ -32,11 +32,11 @@ namespace MDRConfigTool
             Application.Run(fSelect);
 
             /*----------------------------------------------
-             * This is used for unit testing.
-             *SolutionHandler solH = new SolutionHandler();
+             * This is used for testing.
+             *
              * ---------------------------------------------*/
+            //SolutionHandler solH = new SolutionHandler();
 
-            
         }
 
         public void helloWorld()
